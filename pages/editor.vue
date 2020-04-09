@@ -21,62 +21,60 @@
                 </div>
 
                 <div class="toolbox">
-                    <div class="new-elements">
+                    <div class="new-elements" style="display: none">
                         <h2>useful elements</h2>
                         <new-element-list :tag-names="newElementTagNames.useful"></new-element-list>
                         <h2>other elements</h2>
                         <new-element-list :tag-names="newElementTagNames.other"></new-element-list>
                     </div>
-                    <div class="element-properties" style="display: none">
+                    <div class="element-properties">
                         <h2>element props</h2>
-                        <div class="element-properties-box">
-                            <ul>
-                                <li><label>
-                                    margin:
-                                    <input type="number">
-                                    <select>
-                                        <option selected>px</option>
-                                        <option>%</option>
-                                        <option>em</option>
-                                        <option>rem</option>
-                                        <option>vh</option>
-                                        <option>vw</option>
-                                    </select>
-                                </label></li>
-                                <li><label>
-                                    padding:
-                                    <input type="number">
-                                    <select>
-                                        <option selected>px</option>
-                                        <option>%</option>
-                                        <option>em</option>
-                                        <option>rem</option>
-                                        <option>vh</option>
-                                        <option>vw</option>
-                                    </select>
-                                </label></li>
-                                <li><label>
-                                    background-color:
-                                    <input type="color">
-                                </label></li>
-                                <li><label>
-                                    border:
-                                    <input type="number">
-                                    <select>
-                                        <option selected>thin</option>
-                                        <option>medium</option>
-                                        <option>thick</option>
-                                    </select>
-                                    <select>
-                                        <option selected>solid</option>
-                                        <option>dotted</option>
-                                        <option>dashed</option>
-                                        <option>double</option>
-                                    </select>
-                                    <input type="color">
-                                </label></li>
-                            </ul>
-                        </div>
+                        <ul>
+                            <li><label>
+                                margin:
+                                <input type="number">
+                                <select>
+                                    <option selected>px</option>
+                                    <option>%</option>
+                                    <option>em</option>
+                                    <option>rem</option>
+                                    <option>vh</option>
+                                    <option>vw</option>
+                                </select>
+                            </label></li>
+                            <li><label>
+                                padding:
+                                <input type="number">
+                                <select>
+                                    <option selected>px</option>
+                                    <option>%</option>
+                                    <option>em</option>
+                                    <option>rem</option>
+                                    <option>vh</option>
+                                    <option>vw</option>
+                                </select>
+                            </label></li>
+                            <li><label>
+                                background-color:
+                                <input type="color">
+                            </label></li>
+                            <li><label>
+                                border:
+                                <input type="number">
+                                <select>
+                                    <option selected>thin</option>
+                                    <option>medium</option>
+                                    <option>thick</option>
+                                </select>
+                                <select>
+                                    <option selected>solid</option>
+                                    <option>dotted</option>
+                                    <option>dashed</option>
+                                    <option>double</option>
+                                </select>
+                                <input type="color">
+                            </label></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -168,19 +166,17 @@
                     flex: 1 1 0;
 
                     .element-properties {
-                        .element-properties-box {
-                            ul {
-                                padding: 10px;
+                        ul {
+                            padding: 10px;
 
-                                & > li {
-                                    list-style: none;
+                            & > li {
+                                list-style: none;
 
-                                    &:not(:first-of-type) {
-                                        margin-top: 10px;
-                                    }
+                                &:not(:first-of-type) {
+                                    margin-top: 10px;
                                 }
-
                             }
+
                         }
                     }
                 }
