@@ -27,55 +27,7 @@
                         <h2>other elements</h2>
                         <new-element-list :tag-names="newElementTagNames.other"></new-element-list>
                     </div>
-                    <div class="element-properties">
-                        <h2>element props</h2>
-                        <ul>
-                            <li><label>
-                                margin:
-                                <input type="number">
-                                <select>
-                                    <option selected>px</option>
-                                    <option>%</option>
-                                    <option>em</option>
-                                    <option>rem</option>
-                                    <option>vh</option>
-                                    <option>vw</option>
-                                </select>
-                            </label></li>
-                            <li><label>
-                                padding:
-                                <input type="number">
-                                <select>
-                                    <option selected>px</option>
-                                    <option>%</option>
-                                    <option>em</option>
-                                    <option>rem</option>
-                                    <option>vh</option>
-                                    <option>vw</option>
-                                </select>
-                            </label></li>
-                            <li><label>
-                                background-color:
-                                <input type="color">
-                            </label></li>
-                            <li><label>
-                                border:
-                                <input type="number">
-                                <select>
-                                    <option selected>thin</option>
-                                    <option>medium</option>
-                                    <option>thick</option>
-                                </select>
-                                <select>
-                                    <option selected>solid</option>
-                                    <option>dotted</option>
-                                    <option>dashed</option>
-                                    <option>double</option>
-                                </select>
-                                <input type="color">
-                            </label></li>
-                        </ul>
-                    </div>
+                    <element-properties></element-properties>
                 </div>
             </div>
 
@@ -90,12 +42,14 @@
     import Vue from 'vue';
     import newElement from "~/components/newElement.vue";
     import newElementList from "~/components/newElementList.vue";
+    import elementProperties from "~/components/elementProperties.vue";
 
     export default Vue.extend({
         name: "editor",
         components: {
             newElement,
-            newElementList
+            newElementList,
+            elementProperties
         },
         data() {
             return {
@@ -164,21 +118,6 @@
 
                 .toolbox {
                     flex: 1 1 0;
-
-                    .element-properties {
-                        ul {
-                            padding: 10px;
-
-                            & > li {
-                                list-style: none;
-
-                                &:not(:first-of-type) {
-                                    margin-top: 10px;
-                                }
-                            }
-
-                        }
-                    }
                 }
             }
 
