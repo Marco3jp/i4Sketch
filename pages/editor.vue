@@ -1,9 +1,6 @@
 <template>
     <main class="editor">
-        <div class="left-sidebar">
-            <p>layout info column</p>
-        </div>
-
+        <left-sidebar></left-sidebar>
         <div class="center">
             <div class="edit-toolbar">
                 <p>edit toolbar</p>
@@ -18,11 +15,13 @@
 
 <script lang="ts">
     import Vue from 'vue';
+    import leftSidebar from "~/components/leftSidebar.vue";
     import rightSidebar from "~/components/rightSidebar.vue";
 
     export default Vue.extend({
         name: "editor",
         components: {
+            leftSidebar,
             rightSidebar
         },
     });
@@ -34,13 +33,6 @@
         height: 100vh;
         width: 100vw;
         overflow: hidden;
-
-        .left-sidebar {
-            height: 100%;
-            width: 240px;
-            border-right: 2px solid gray;
-
-        }
 
         .center {
             flex-grow: 1;
