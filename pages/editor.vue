@@ -1,8 +1,8 @@
 <template>
     <main class="editor">
         <left-sidebar></left-sidebar>
-        <div class="center">
-            <div class="edit-toolbar">
+        <div class="sketchbook-wrapper">
+            <div class="sketchbook-toolbar">
                 <p>edit toolbar</p>
             </div>
             <div class="sketchbook">
@@ -34,15 +34,19 @@
         width: 100vw;
         overflow: hidden;
 
-        .center {
+        .sketchbook-wrapper {
             flex-grow: 1;
             height: 100%;
             display: flex;
             flex-direction: column;
 
-            .edit-toolbar {
+            .sketchbook-toolbar {
                 height: 48px;
                 border-bottom: 2px solid gray;
+            }
+
+            .sketchbook {
+                flex-grow: 1;
             }
         }
     }
