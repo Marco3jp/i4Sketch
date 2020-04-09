@@ -23,30 +23,9 @@
                 <div class="toolbox">
                     <div class="new-elements">
                         <h2>useful elements</h2>
-                        <ul class="new-element-list">
-                            <new-element tag-name="h1"></new-element>
-                            <new-element tag-name="p"></new-element>
-                            <new-element tag-name="img"></new-element>
-                            <new-element tag-name="div"></new-element>
-                            <new-element tag-name="a"></new-element>
-                            <new-element tag-name="ul"></new-element>
-                            <new-element tag-name="li"></new-element>
-                        </ul>
+                        <new-element-list :tag-names="newElementTagNames.useful"></new-element-list>
                         <h2>other elements</h2>
-                        <ul class="new-element-list">
-                            <new-element tag-name="main"></new-element>
-                            <new-element tag-name="article"></new-element>
-                            <new-element tag-name="aside"></new-element>
-                            <new-element tag-name="video"></new-element>
-                            <new-element tag-name="canvas"></new-element>
-                            <new-element tag-name="hoge"></new-element>
-                            <new-element tag-name="hoge"></new-element>
-                            <new-element tag-name="hoge"></new-element>
-                            <new-element tag-name="hoge"></new-element>
-                            <new-element tag-name="hoge"></new-element>
-                            <new-element tag-name="hoge"></new-element>
-                            <new-element tag-name="hoge"></new-element>
-                        </ul>
+                        <new-element-list :tag-names="newElementTagNames.other"></new-element-list>
                     </div>
                     <div class="element-properties" style="display: none">
                         <h2>element props</h2>
@@ -112,11 +91,21 @@
 <script lang="ts">
     import Vue from 'vue';
     import newElement from "~/components/newElement.vue";
+    import newElementList from "~/components/newElementList.vue";
 
     export default Vue.extend({
         name: "editor",
         components: {
             newElement,
+            newElementList
+        },
+        data() {
+            return {
+                newElementTagNames: {
+                    useful: ["h1", "p", "img", "div", "a", "ul", "li"],
+                    other: ["main", "article", "aside", "video", "canvas", "hoge", "hoge", "hoge", "hoge", "hoge",]
+                }
+            }
         }
     });
 </script>
@@ -177,16 +166,6 @@
 
                 .toolbox {
                     flex: 1 1 0;
-
-                    .new-elements {
-                        .new-element-list {
-                            display: flex;
-                            flex-wrap: wrap;
-                            padding: 10px;
-
-
-                        }
-                    }
 
                     .element-properties {
                         .element-properties-box {
