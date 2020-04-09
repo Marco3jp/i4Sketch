@@ -1,7 +1,6 @@
 <template>
     <div class="container">
         <div>
-            <logo/>
             <h1 class="title">
                 i4Sketch
             </h1>
@@ -30,12 +29,9 @@
 
 <script lang="ts">
     import Vue from 'vue'
-    import Logo from '~/components/Logo.vue'
 
     export default Vue.extend({
-        components: {
-            Logo
-        }
+        components: {}
     })
 </script>
 
