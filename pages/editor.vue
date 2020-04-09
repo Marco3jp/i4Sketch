@@ -21,35 +21,34 @@
                 </div>
 
                 <div class="toolbox">
-                    <div class="new-elements" style="display: none">
+                    <div class="new-elements">
                         <h2>useful elements</h2>
                         <ul class="new-element-list">
-                            <li class="new-element">h1</li>
-                            <li class="new-element">p</li>
-                            <li class="new-element">img</li>
-                            <li class="new-element">div</li>
-                            <li class="new-element">a</li>
-                            <li class="new-element">ul</li>
-                            <li class="new-element">li</li>
+                            <new-element tag-name="h1"></new-element>
+                            <new-element tag-name="p"></new-element>
+                            <new-element tag-name="img"></new-element>
+                            <new-element tag-name="div"></new-element>
+                            <new-element tag-name="a"></new-element>
+                            <new-element tag-name="ul"></new-element>
+                            <new-element tag-name="li"></new-element>
                         </ul>
                         <h2>other elements</h2>
                         <ul class="new-element-list">
-                            <li class="new-element">main</li>
-                            <li class="new-element">article</li>
-                            <li class="new-element">aside</li>
-                            <li class="new-element">video</li>
-                            <li class="new-element">canvas</li>
-                            <li class="new-element">hoge</li>
-                            <li class="new-element">hoge</li>
-                            <li class="new-element">hoge</li>
-                            <li class="new-element">hoge</li>
-                            <li class="new-element">hoge</li>
-                            <li class="new-element">hoge</li>
-                            <li class="new-element">hoge</li>
-                            <li class="new-element">hoge</li>
+                            <new-element tag-name="main"></new-element>
+                            <new-element tag-name="article"></new-element>
+                            <new-element tag-name="aside"></new-element>
+                            <new-element tag-name="video"></new-element>
+                            <new-element tag-name="canvas"></new-element>
+                            <new-element tag-name="hoge"></new-element>
+                            <new-element tag-name="hoge"></new-element>
+                            <new-element tag-name="hoge"></new-element>
+                            <new-element tag-name="hoge"></new-element>
+                            <new-element tag-name="hoge"></new-element>
+                            <new-element tag-name="hoge"></new-element>
+                            <new-element tag-name="hoge"></new-element>
                         </ul>
                     </div>
-                    <div class="element-properties">
+                    <div class="element-properties" style="display: none">
                         <h2>element props</h2>
                         <div class="element-properties-box">
                             <ul>
@@ -112,9 +111,13 @@
 
 <script lang="ts">
     import Vue from 'vue';
+    import newElement from "~/components/newElement.vue";
 
     export default Vue.extend({
-        name: "editor"
+        name: "editor",
+        components: {
+            newElement,
+        }
     });
 </script>
 
@@ -182,16 +185,6 @@
                             padding: 10px;
 
 
-                            .new-element {
-                                $element-size: (240px - 20px - 30px - 6px) / 3;
-                                display: block;
-                                width: $element-size;
-                                height: $element-size;
-                                line-height: $element-size;
-                                margin: 5px;
-                                border: 1px solid gray;
-                                text-align: center;
-                            }
                         }
                     }
 
