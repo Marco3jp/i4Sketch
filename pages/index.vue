@@ -22,6 +22,10 @@
                 >
                     GitHub
                 </a>
+
+                <nuxt-link to="/editor" class="button--grey">
+                    Go to Sketchbook!
+                </nuxt-link>
             </div>
         </div>
     </div>
