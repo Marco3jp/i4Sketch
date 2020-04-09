@@ -12,25 +12,18 @@
                 <p>sketchbook</p>
             </div>
         </div>
-
-        <div class="right-sidebar">
-            <!-- TODO: 命名が微妙なので考える -->
-            <toolbox></toolbox>
-            <div class="color-palette">
-                <p>color palette</p>
-            </div>
-        </div>
+        <right-sidebar></right-sidebar>
     </main>
 </template>
 
 <script lang="ts">
     import Vue from 'vue';
-    import toolbox from "~/components/toolbox.vue";
+    import rightSidebar from "~/components/rightSidebar.vue";
 
     export default Vue.extend({
         name: "editor",
         components: {
-            toolbox
+            rightSidebar
         },
     });
 </script>
@@ -60,20 +53,6 @@
                 border-bottom: 2px solid gray;
             }
         }
-
-        .right-sidebar {
-            height: 100%;
-            width: 240px;
-            border-left: 2px solid gray;
-            display: flex;
-            flex-direction: column;
-
-            .color-palette {
-                border-top: 2px solid gray;
-                height: 300px;
-            }
-        }
-
     }
 
 </style>
