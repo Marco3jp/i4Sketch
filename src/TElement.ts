@@ -1,7 +1,8 @@
 import {TypesettingElement} from "~/src/interface/TypesettingElement";
+import {TextElement} from "~/src/interface/TextElement";
 
 export class TElement implements TypesettingElement {
-    readonly childElements: Array<TypesettingElement>;
+    readonly childElements: Array<TypesettingElement | TextElement>;
     readonly classList: DOMTokenList;
     id: string;
     style: CSSStyleDeclaration;

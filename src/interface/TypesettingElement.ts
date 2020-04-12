@@ -1,6 +1,8 @@
+import {TextElement} from "~/src/interface/TextElement";
+
 export interface TypesettingElement {
     // from Node interface
-    readonly childElements: Array<TypesettingElement>
+    readonly childElements: Array<TypesettingElement | TextElement>
 
     appendChild(element: TypesettingElement): TypesettingElement
 
