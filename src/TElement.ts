@@ -1,6 +1,6 @@
 import {TypesettingElement} from "~/src/interface/TypesettingElement";
 
-class TElement implements TypesettingElement {
+export class TElement implements TypesettingElement {
     readonly childElements: Array<TypesettingElement>;
     readonly classList: DOMTokenList;
     id: string;
