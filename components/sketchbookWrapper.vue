@@ -4,16 +4,23 @@
             <p>edit toolbar</p>
         </div>
         <div class="sketchbook">
-            <p>sketchbook</p>
+            <window-sketch v-for="(window, index) in windowsData" :key="index" :window-data="window"></window-sketch>
         </div>
     </div>
 </template>
 
 <script lang="ts">
     import Vue from 'vue';
+    import windowSketch from "~/components/windowSketch.vue";
 
     export default Vue.extend({
-        name: "sketchbookWrapper"
+        name: "sketchbookWrapper",
+        components: {windowSketch},
+        computed: {
+            windowsData: function () {
+                return this.$store.state.structure.windows;
+            }
+        }
     });
 </script>
 
