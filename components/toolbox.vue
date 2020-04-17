@@ -19,7 +19,6 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import newElement from "~/components/newElement.vue";
     import newElementList from "~/components/newElementList.vue";
     import elementProperties from "~/components/elementProperties.vue";
 
@@ -27,7 +26,6 @@
     export default Vue.extend({
         name: "toolbox",
         components: {
-            newElement,
             newElementList,
             elementProperties
         },
