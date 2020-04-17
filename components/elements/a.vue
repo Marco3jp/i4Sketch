@@ -6,12 +6,12 @@
 
 <script lang="ts">
     import Vue, {PropOptions} from 'vue';
-    import ElementHandler from "~/components/ElementHandler.vue";
+    import elementHandler from "~/components/elementHandler.vue";
     import {TypesettingAnchorElement} from "~/src/interface/TypesettingAnchorElement";
 
     export default Vue.extend({
         name: "TA",
-        components: {ElementHandler},
+        components: {elementHandler},
         props: {
             anchorElementData: {
                 type: Object,

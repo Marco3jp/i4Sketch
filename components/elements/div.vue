@@ -7,12 +7,12 @@
 
 <script lang="ts">
     import Vue, {PropOptions} from 'vue';
-    import ElementHandler from "~/components/ElementHandler.vue";
+    import elementHandler from "~/components/elementHandler.vue";
     import {TypesettingElement} from "~/src/interface/TypesettingElement";
 
     export default Vue.extend({
         name: "TDiv",
-        components: {ElementHandler},
+        components: {elementHandler},
         props: {
             divElementData: {
                 type: Object,
