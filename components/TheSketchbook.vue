@@ -46,7 +46,7 @@
         display: flex;
         flex-direction: column;
 
-        .sketchbook-canvas {
+        .sketchbook-canvas, .sketchbook-codeview {
             flex-grow: 1;
         }
     }
