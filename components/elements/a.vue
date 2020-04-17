@@ -1,5 +1,5 @@
 <template>
-    <a :href="anchorElementData.href" :id="anchorElementData.id">
+    <a :href="anchorElementData.href" :target="anchorElementData.target" :download="anchorElementData.download">
         <element-handler v-for="(element, index) in anchorElementData.childElements" :key="index"
                          :element="element"></element-handler>
     </a>
