@@ -1,21 +1,22 @@
 <template>
-    <div class="sketchbook-wrapper">
+    <div class="sketchbook">
         <div class="sketchbook-toolbar">
             <p>edit toolbar</p>
         </div>
-        <div class="sketchbook">
-            <window-sketch v-for="(window, index) in windowsData" :key="index" :window-data="window"></window-sketch>
+        <div class="sketchbook-canvas">
+            <the-sketchbook-window-item v-for="(window, index) in windowsData" :key="index"
+                                        :window-data="window"></the-sketchbook-window-item>
         </div>
     </div>
 </template>
 
 <script lang="ts">
     import Vue from 'vue';
-    import windowSketch from "~/components/windowSketch.vue";
+    import TheSketchbookWindowItem from "~/components/TheSketchbookWindowItem.vue";
 
     export default Vue.extend({
-        name: "sketchbookWrapper",
-        components: {windowSketch},
+        name: "TheSketchbook",
+        components: {TheSketchbookWindowItem},
         computed: {
             windowsData: function () {
                 return this.$store.state.structure.windows;
@@ -25,7 +26,7 @@
 </script>
 
 <style scoped lang="scss">
-    .sketchbook-wrapper {
+    .sketchbook {
         flex-grow: 1;
         height: 100%;
         display: flex;
@@ -36,7 +37,7 @@
             border-bottom: 2px solid gray;
         }
 
-        .sketchbook {
+        .sketchbook-canvas {
             flex-grow: 1;
         }
     }

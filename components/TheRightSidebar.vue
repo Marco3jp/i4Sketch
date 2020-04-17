@@ -1,7 +1,7 @@
 <template>
     <div class="right-sidebar">
         <!-- TODO: 命名が微妙なので考える -->
-        <toolbox></toolbox>
+        <the-right-sidebar-toolbox></the-right-sidebar-toolbox>
         <div class="color-palette">
             <p>color palette</p>
         </div>
@@ -10,12 +10,12 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import toolbox from "~/components/toolbox.vue";
+    import TheRightSidebarToolbox from "~/components/TheRightSidebarToolbox.vue";
 
     export default Vue.extend({
-        name: "rightSidebar",
+        name: "TheRightSidebar",
         components: {
-            toolbox
+            TheRightSidebarToolbox
         }
     });
 </script>

@@ -6,7 +6,7 @@
     import Vue from 'vue';
 
     export default Vue.extend({
-        name: "newElementListItem",
+        name: "ElementListItem",
         props: ['tagName']
     });
 </script>

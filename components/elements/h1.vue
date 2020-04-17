@@ -8,12 +8,12 @@
 <script lang="ts">
     import Vue, {PropOptions} from 'vue';
     import {TypesettingElement} from "~/src/interface/TypesettingElement";
-    import elementHandler from "~/components/elementHandler.vue";
+    import ElementHandler from "~/components/ElementHandler.vue";
 
     export default Vue.extend({
         name: "TH1",
         components: {
-            elementHandler
+            ElementHandler
         },
         props: {
             h1ElementData: {

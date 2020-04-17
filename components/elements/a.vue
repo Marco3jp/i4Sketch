@@ -1,17 +1,18 @@
 <template>
     <a :href="anchorElementData.href" :id="anchorElementData.id">
-        <element-handler v-for="(element, index) in anchorElementData.childElements" :key="index" :element="element"></element-handler>
+        <element-handler v-for="(element, index) in anchorElementData.childElements" :key="index"
+                         :element="element"></element-handler>
     </a>
 </template>
 
 <script lang="ts">
     import Vue, {PropOptions} from 'vue';
-    import elementHandler from "~/components/elementHandler.vue";
+    import ElementHandler from "~/components/ElementHandler.vue";
     import {TypesettingAnchorElement} from "~/src/interface/TypesettingAnchorElement";
 
     export default Vue.extend({
         name: "TA",
-        components: {elementHandler},
+        components: {ElementHandler},
         props: {
             anchorElementData: {
                 type: Object,

@@ -7,12 +7,12 @@
 
 <script lang="ts">
     import Vue, {PropOptions} from 'vue';
-    import elementHandler from "~/components/elementHandler.vue";
+    import ElementHandler from "~/components/ElementHandler.vue";
     import {TypesettingWindow} from "~/src/interface/TypesettingWindow";
 
     export default Vue.extend({
-        name: "windowSketch",
-        components: {elementHandler},
+        name: "TheSketchbookWindowItem",
+        components: {ElementHandler},
         props: {
             windowData: {
                 type: Object,

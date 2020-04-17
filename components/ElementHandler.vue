@@ -17,7 +17,7 @@
     import {TextElement as TextElementInterface} from "~/src/interface/TextElement"
 
     export default Vue.extend({
-        name: "elementHandler",
+        name: "ElementHandler",
         components: {
             TDiv: () => import("~/components/elements/div.vue"),
             TH1: () => import( "~/components/elements/h1.vue"),

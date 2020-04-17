@@ -6,12 +6,7 @@
         </div>
 
         <div class="toolbox-items">
-            <div class="new-elements" style="display: none">
-                <h2>useful elements</h2>
-                <new-element-list :tag-names="newElementTagNames.useful"></new-element-list>
-                <h2>other elements</h2>
-                <new-element-list :tag-names="newElementTagNames.other"></new-element-list>
-            </div>
+            <element-list :element-tag-names="elementTagNames" style="display: none"></element-list>
             <element-properties></element-properties>
         </div>
     </div>
@@ -19,19 +14,19 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import newElementList from "~/components/newElementList.vue";
-    import elementProperties from "~/components/elementProperties.vue";
+    import ElementList from "~/components/ElementList.vue";
+    import ElementProperties from "~/components/ElementProperties.vue";
 
 
     export default Vue.extend({
-        name: "toolbox",
+        name: "TheRightSidebarToolbox",
         components: {
-            newElementList,
-            elementProperties
+            ElementList,
+            ElementProperties
         },
         data() {
             return {
-                newElementTagNames: {
+                elementTagNames: {
                     useful: ["h1", "p", "img", "div", "a", "ul", "li"],
                     other: ["main", "article", "aside", "video", "canvas", "hoge", "hoge", "hoge", "hoge", "hoge",]
                 }

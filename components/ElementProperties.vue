@@ -54,7 +54,7 @@
     import Vue from 'vue';
 
     export default Vue.extend({
-        name: "elementProperties"
+        name: "ElementProperties"
     });
 </script>
 

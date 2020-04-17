@@ -7,12 +7,12 @@
 
 <script lang="ts">
     import Vue, {PropOptions} from 'vue';
-    import elementHandler from "~/components/elementHandler.vue";
+    import ElementHandler from "~/components/ElementHandler.vue";
     import {TypesettingElement} from "~/src/interface/TypesettingElement";
 
     export default Vue.extend({
         name: "TP",
-        components: {elementHandler},
+        components: {ElementHandler},
         props: {
             pElementData: {
                 type: Object,

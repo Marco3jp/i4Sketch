@@ -1,23 +1,23 @@
 <template>
     <main class="editor">
-        <left-sidebar></left-sidebar>
-        <sketchbook-wrapper></sketchbook-wrapper>
-        <right-sidebar></right-sidebar>
+        <the-left-sidebar></the-left-sidebar>
+        <the-sketchbook></the-sketchbook>
+        <the-right-sidebar></the-right-sidebar>
     </main>
 </template>
 
 <script lang="ts">
     import Vue from 'vue';
-    import leftSidebar from "~/components/leftSidebar.vue";
-    import sketchbookWrapper from "~/components/sketchbookWrapper.vue";
-    import rightSidebar from "~/components/rightSidebar.vue";
+    import TheLeftSidebar from "~/components/TheLeftSidebar.vue";
+    import TheSketchbook from "~/components/TheSketchbook.vue";
+    import TheRightSidebar from "~/components/TheRightSidebar.vue";
 
     export default Vue.extend({
         name: "editor",
         components: {
-            leftSidebar,
-            sketchbookWrapper,
-            rightSidebar
+            TheLeftSidebar,
+            TheSketchbook,
+            TheRightSidebar
         },
     });
 </script>
