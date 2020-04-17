@@ -1,4 +1,4 @@
 export interface TextElement {
-    readonly tagName: string
+    readonly tagName: "#text"
     value: string
 }
