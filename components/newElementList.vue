@@ -1,16 +1,17 @@
 <template>
     <ul class="new-element-list">
-        <new-element v-for="(tagName,index) in tagNames" :tag-name="tagName" :key="index"></new-element>
+        <new-element-list-item v-for="(tagName,index) in tagNames" :tag-name="tagName"
+                               :key="index"></new-element-list-item>
     </ul>
 </template>
 
 <script lang="ts">
     import Vue from 'vue';
-    import newElement from "~/components/newElement.vue";
+    import newElementListItem from "~/components/newElementListItem.vue";
 
     export default Vue.extend({
         name: "newElementList",
-        components: {newElement},
+        components: {newElementListItem},
         props: ['tagNames'],
     });
 </script>
