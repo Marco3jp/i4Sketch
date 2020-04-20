@@ -1,4 +1,5 @@
 import {TextElement} from "~/src/interface/TextElement";
+import {CategoriesEnum} from "~/src/enum/categoriesEnum";
 
 export interface TypesettingElement {
     // from Node interface
@@ -15,4 +16,8 @@ export interface TypesettingElement {
 
     // from HTMLElement interface
     style: CSSStyleDeclaration
+
+    // from HTML Spec
+    readonly categories: Array<CategoriesEnum>
+    readonly contentModel: Array<CategoriesEnum>
 }
