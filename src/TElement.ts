@@ -1,5 +1,6 @@
 import {TypesettingElement} from "~/src/interface/TypesettingElement";
 import {TextElement} from "~/src/interface/TextElement";
+import {CategoriesEnum} from "~/src/enum/categoriesEnum";
 
 export class TElement implements TypesettingElement {
     readonly childElements: Array<TypesettingElement | TextElement>;
@@ -7,6 +8,9 @@ export class TElement implements TypesettingElement {
     id: string;
     style: CSSStyleDeclaration;
     readonly tagName: string;
+    readonly categories: Array<CategoriesEnum>;
+    readonly contentModel: Array<CategoriesEnum>;
+
 
     appendChild(element: TypesettingElement): TypesettingElement {
         this.childElements.push(element);
@@ -22,11 +26,13 @@ export class TElement implements TypesettingElement {
         }
     }
 
-    constructor(tagName: string) {
+    constructor(tagName: string, categories: Array<CategoriesEnum>, contentModel: Array<CategoriesEnum>) {
         this.childElements = [];
         this.classList = new DOMTokenList();
         this.id = "";
         this.style = new CSSStyleDeclaration();
         this.tagName = tagName;
+        this.categories = categories;
+        this.contentModel = contentModel;
     }
 }
