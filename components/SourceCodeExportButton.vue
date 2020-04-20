@@ -37,6 +37,7 @@
             },
 
             // TODO: Fix correctness...
+            // tagName -> instanceof, but need to fix sample tree building. (currently, those tree don't have constructor. so all statement return false)
             getTreeSourceString(tree: Array<TypesettingElement | TypesettingAnchorElement | TypesettingImageElement | TextElement>, sourceString = ""): string {
                 tree.forEach(element => {
                     if (element.tagName === "#text") {
