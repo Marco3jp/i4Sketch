@@ -6,7 +6,7 @@ import {TypesettingAnchorElement} from "~/src/interface/TypesettingAnchorElement
 export interface TypesettingElement {
     // from Node interface
     readonly childElements: Array<TypesettingElement | TypesettingImageElement | TypesettingAnchorElement | TextElement>
-    readonly parentElement: TypesettingElement | TypesettingAnchorElement;
+    parentElement: TypesettingElement | TypesettingAnchorElement | null;
 
     appendChild(element: TypesettingElement): TypesettingElement
 
