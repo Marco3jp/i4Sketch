@@ -1,9 +1,12 @@
 import {TextElement} from "~/src/interface/TextElement";
 import {CategoriesEnum} from "~/src/enum/categoriesEnum";
+import {TypesettingImageElement} from "~/src/interface/TypesettingImageElement";
+import {TypesettingAnchorElement} from "~/src/interface/TypesettingAnchorElement";
 
 export interface TypesettingElement {
     // from Node interface
-    readonly childElements: Array<TypesettingElement | TextElement>
+    readonly childElements: Array<TypesettingElement | TypesettingImageElement | TypesettingAnchorElement | TextElement>
+    readonly parentElement: TypesettingElement | TypesettingAnchorElement;
 
     appendChild(element: TypesettingElement): TypesettingElement
 
