@@ -1,5 +1,6 @@
 <template>
     <h1 @mouseenter="enterMouse" @mouseleave="leaveMouse" :class="{'new-element-drop-border': isEnterMouse}">
+        <!-- TODO: コンテンツカテゴリに合わせて正しく許容される内容を確認する -->
         <span v-if="isEnterMouse" class="new-element-drop-space-inline"></span>
         <element-handler v-for="(element, index) in h1ElementData.childElements" :key="index"
                          :element="element"></element-handler>
