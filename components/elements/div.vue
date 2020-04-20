@@ -1,9 +1,9 @@
 <template>
-    <div @mouseenter="enterMouse" @mouseleave="leaveMouse">
-        <div v-if="isEnterMouse" class="new-element-drop-space" @click="logSampleMessage"></div>
+    <div @mouseenter="enterMouse" @mouseleave="leaveMouse" :class="{'new-element-drop-border': isEnterMouse}">
+        <div v-if="isEnterMouse" class="new-element-drop-space-block"></div>
         <element-handler v-for="(element, index) in divElementData.childElements" :key="index"
                          :element="element"></element-handler>
-        <div v-if="isEnterMouse" class="new-element-drop-space" @click="logSampleMessage"></div>
+        <div v-if="isEnterMouse" class="new-element-drop-space-block"></div>
     </div>
 </template>
 
@@ -35,9 +35,6 @@
                 this.isEnterMouse = false;
                 this.$emit("reverseBubblesMouseLeave");
             },
-            logSampleMessage() {
-                console.log("clicked drop space");
-            }
         }
     });
 </script>
