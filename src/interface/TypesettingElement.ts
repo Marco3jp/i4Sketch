@@ -12,6 +12,9 @@ export interface TypesettingElement {
 
     removeChild(element: TypesettingElement): void
 
+    // for parentElement appendChild method
+    setParentElement(element: TypesettingElement): void
+
     // from Element interface
     readonly classList: DOMTokenList
     id: string
