@@ -1,5 +1,16 @@
-.new-element-drop-space {
+.new-element-drop-space-block {
     height: 32px;
     width: 100%;
     background: gray;
+}
+
+.new-element-drop-space-inline {
+    padding-left: .5em;
+    padding-right: .5em;
+    background: gray;
+}
+
+.new-element-drop-border {
+    border: dashed 1px black;
+    margin: 3px;
 }

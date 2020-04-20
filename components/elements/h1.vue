@@ -1,7 +1,9 @@
 <template>
-    <h1>
+    <h1 @mouseenter="enterMouse" @mouseleave="leaveMouse" :class="{'new-element-drop-border': isEnterMouse}">
+        <span v-if="isEnterMouse" class="new-element-drop-space-inline"></span>
         <element-handler v-for="(element, index) in h1ElementData.childElements" :key="index"
                          :element="element"></element-handler>
+        <span v-if="isEnterMouse" class="new-element-drop-space-inline"></span>
     </h1>
 </template>
 
@@ -21,6 +23,21 @@
                 required: true
             } as PropOptions<TypesettingElement>
         },
+        data() {
+            return {
+                isEnterMouse: false
+            }
+        },
+        methods: {
+            enterMouse() {
+                this.isEnterMouse = true;
+                this.$emit("reverseBubblesMouseEnter");
+            },
+            leaveMouse() {
+                this.isEnterMouse = false;
+                this.$emit("reverseBubblesMouseLeave");
+            }
+        }
     });
 
 </script>
