@@ -3,6 +3,7 @@ import {TextElement} from "~/src/interface/TextElement";
 import {CategoriesEnum} from "~/src/HTMLSpecReference/enum/categoriesEnum";
 import {TypesettingAnchorElement} from "~/src/interface/TypesettingAnchorElement";
 import {TypesettingImageElement} from "~/src/interface/TypesettingImageElement";
+import {TagNamesEnum} from "~/src/HTMLSpecReference/enum/tagNamesEnum";
 
 export class TElement implements TypesettingElement {
     readonly childElements: Array<TypesettingElement | TypesettingImageElement | TypesettingAnchorElement | TextElement>;
@@ -34,7 +35,7 @@ export class TElement implements TypesettingElement {
         this.parentElement = parentElement;
     }
 
-    constructor(tagName: string, categories: Array<CategoriesEnum>, contentModel: Array<CategoriesEnum>) {
+    constructor(tagName: TagNamesEnum, categories: Array<CategoriesEnum>, contentModel: Array<CategoriesEnum>) {
         this.childElements = [];
         this.parentElement = null;
         this.classList = new DOMTokenList();
