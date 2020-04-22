@@ -1,5 +1,5 @@
 import {TextElement} from "~/src/interface/TextElement";
-import {CategoriesEnum} from "~/src/enum/categoriesEnum";
+import {CategoriesEnum} from "~/src/HTMLSpecReference/enum/categoriesEnum";
 import {TypesettingImageElement} from "~/src/interface/TypesettingImageElement";
 import {TypesettingAnchorElement} from "~/src/interface/TypesettingAnchorElement";
 

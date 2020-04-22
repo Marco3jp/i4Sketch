@@ -1,6 +1,6 @@
 import {TypesettingElement} from "~/src/interface/TypesettingElement";
 import {TextElement} from "~/src/interface/TextElement";
-import {CategoriesEnum} from "~/src/enum/categoriesEnum";
+import {CategoriesEnum} from "~/src/HTMLSpecReference/enum/categoriesEnum";
 import {TypesettingAnchorElement} from "~/src/interface/TypesettingAnchorElement";
 import {TypesettingImageElement} from "~/src/interface/TypesettingImageElement";
 
