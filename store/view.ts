@@ -4,6 +4,7 @@ export type RootState = ReturnType<typeof state>
 
 export const state = () => ({
     isShowSourceCode: false,
+    currentToolboxItemName: "elements"
 });
 
 export const mutations: MutationTree<RootState> = {
@@ -12,5 +13,11 @@ export const mutations: MutationTree<RootState> = {
     },
     closeExportSourceCodeView(state) {
         state.isShowSourceCode = false;
+    },
+    switchToolboxToElements(state) {
+        state.currentToolboxItemName = "elements";
+    },
+    switchToolboxToProperties(state) {
+        state.currentToolboxItemName = "properties";
     }
 };
