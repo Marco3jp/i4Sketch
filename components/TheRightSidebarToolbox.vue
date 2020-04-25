@@ -1,14 +1,11 @@
 <template>
     <div class="toolbox">
-        <div class="toolbox-switcher">
-            <div>Elements</div>
-            <div>Props</div>
-        </div>
-
-        <div class="toolbox-items">
-            <element-list :element-tag-names="elementTagNames" style="display: none"></element-list>
-            <element-properties></element-properties>
-        </div>
+        <the-right-sidebar-toolbox-switcher></the-right-sidebar-toolbox-switcher>
+        <the-right-sidebar-toolbox-items>
+            <keep-alive>
+                <component :is="currentToolboxItem"></component>
+            </keep-alive>
+        </the-right-sidebar-toolbox-items>
     </div>
 </template>
 
@@ -16,19 +13,24 @@
     import Vue from 'vue';
     import ElementList from "~/components/ElementList.vue";
     import ElementProperties from "~/components/ElementProperties.vue";
+    import TheRightSidebarToolboxSwitcher from "~/components/TheRightSidebarToolboxSwitcher.vue";
+    import TheRightSidebarToolboxItems from "~/components/TheRightSidebarToolboxItems.vue";
 
 
     export default Vue.extend({
         name: "TheRightSidebarToolbox",
         components: {
             ElementList,
-            ElementProperties
+            ElementProperties,
+            TheRightSidebarToolboxSwitcher,
+            TheRightSidebarToolboxItems
         },
-        data() {
-            return {
-                elementTagNames: {
-                    useful: ["h1", "p", "img", "div", "a", "ul", "li"],
-                    other: ["main", "article", "aside", "video", "canvas", "hoge", "hoge", "hoge", "hoge", "hoge",]
+        computed: {
+            currentToolboxItem: function () {
+                if (this.$store.state.view.currentToolboxItemName === "elements") {
+                    return ElementList;
+                } else if (this.$store.state.view.currentToolboxItemName === "properties") {
+                    return ElementProperties;
                 }
             }
         }
@@ -40,25 +42,5 @@
         flex-grow: 1;
         display: flex;
         flex-direction: column;
-
-        .toolbox-switcher {
-            height: 48px;
-            display: flex;
-            border-bottom: 2px solid gray;
-
-            & > div {
-                text-align: center;
-                line-height: 48px;
-                flex: 1 1 0;
-
-                &:first-of-type {
-                    border-right: 2px solid gray;
-                }
-            }
-        }
-
-        .toolbox-items {
-            flex: 1 1 0;
-        }
     }
 </style>
