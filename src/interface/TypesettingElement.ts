@@ -15,12 +15,12 @@ export interface TypesettingElement {
     setParentElement(parentElement: NotTextElements): void
 
     // from Element interface
-    readonly classList: DOMTokenList
+    // readonly classList: DOMTokenList 生成できなさそうなので自前実装する必要があるかも
     id: string
     readonly tagName: TagNamesEnum
 
     // from HTMLElement interface
-    style: CSSStyleDeclaration
+    // style: CSSStyleDeclaration
 
     // from HTML Spec
     readonly categories: Array<CategoriesEnum>
@@ -28,8 +28,8 @@ export interface TypesettingElement {
 }
 
 export interface TypesettingElementOptions {
-    categories: Array<CategoriesEnum>
-    contentModel: Array<CategoriesEnum>
+    categories?: Array<CategoriesEnum>
+    contentModel?: Array<CategoriesEnum>
     id?: string
     childElements?: Array<AllElements>
 }

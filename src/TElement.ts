@@ -6,9 +6,9 @@ import {AllElements, NotTextElements} from "~/src/TypeAlias";
 export class TElement implements TypesettingElement {
     readonly childElements: Array<AllElements>;
     parentElement: NotTextElements | null;
-    readonly classList: DOMTokenList;
+    // readonly classList: DOMTokenList;
     id: string;
-    style: CSSStyleDeclaration;
+    // style: CSSStyleDeclaration;
     readonly tagName: TagNamesEnum;
     readonly categories: Array<CategoriesEnum>;
     readonly contentModel: Array<CategoriesEnum>;
@@ -35,8 +35,8 @@ export class TElement implements TypesettingElement {
 
     constructor(tagName: TagNamesEnum, options?: TypesettingElementOptions) {
         this.parentElement = null;
-        this.classList = new DOMTokenList();
-        this.style = new CSSStyleDeclaration();
+        // this.classList = new DOMTokenList();
+        // this.style = new CSSStyleDeclaration();
         this.tagName = tagName;
         this.childElements = options?.childElements ?? [];
         this.id = options?.id ?? "";
