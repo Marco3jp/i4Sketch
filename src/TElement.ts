@@ -1,22 +1,20 @@
-import {TypesettingElement} from "~/src/interface/TypesettingElement";
-import {TextElement} from "~/src/interface/TextElement";
+import {TypesettingElement, TypesettingElementOptions} from "~/src/interface/TypesettingElement";
 import {CategoriesEnum} from "~/src/HTMLSpecReference/enum/categoriesEnum";
-import {TypesettingAnchorElement} from "~/src/interface/TypesettingAnchorElement";
-import {TypesettingImageElement} from "~/src/interface/TypesettingImageElement";
 import {TagNamesEnum} from "~/src/HTMLSpecReference/enum/tagNamesEnum";
+import {AllElements, NotTextElements} from "~/src/TypeAlias";
 
 export class TElement implements TypesettingElement {
-    readonly childElements: Array<TypesettingElement | TypesettingImageElement | TypesettingAnchorElement | TextElement>;
-    parentElement: TypesettingElement | TypesettingAnchorElement | null;
+    readonly childElements: Array<AllElements>;
+    parentElement: NotTextElements | null;
     readonly classList: DOMTokenList;
     id: string;
     style: CSSStyleDeclaration;
-    readonly tagName: string;
+    readonly tagName: TagNamesEnum;
     readonly categories: Array<CategoriesEnum>;
     readonly contentModel: Array<CategoriesEnum>;
 
 
-    appendChild(element: TypesettingElement): TypesettingElement {
+    appendChild(element: AllElements): AllElements {
         this.childElements.push(element);
         element.setParentElement(this);
         return element;
