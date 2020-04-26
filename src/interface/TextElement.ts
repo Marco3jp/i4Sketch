@@ -7,3 +7,8 @@ export interface TextElement {
 
     setParentElement(parentElement: NotTextElements): void
 }
+
+export interface TextElementOptions {
+    parentElement?: NotTextElements,
+    value?: string
+}
