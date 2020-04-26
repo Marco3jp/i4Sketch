@@ -1,21 +1,18 @@
-import {TextElement} from "~/src/interface/TextElement";
 import {CategoriesEnum} from "~/src/HTMLSpecReference/enum/categoriesEnum";
-import {TypesettingImageElement} from "~/src/interface/TypesettingImageElement";
-import {TypesettingAnchorElement} from "~/src/interface/TypesettingAnchorElement";
 import {TagNamesEnum} from "~/src/HTMLSpecReference/enum/tagNamesEnum";
-import {AllElements} from "~/src/TypeAlias";
+import {AllElements, NotTextElements} from "~/src/TypeAlias";
 
 export interface TypesettingElement {
     // from Node interface
-    readonly childElements: Array<TypesettingElement | TypesettingImageElement | TypesettingAnchorElement | TextElement>
-    parentElement: TypesettingElement | TypesettingAnchorElement | null;
+    readonly childElements: Array<AllElements>
+    parentElement: NotTextElements | null;
 
-    appendChild(element: TypesettingElement): TypesettingElement
+    appendChild(element: AllElements): AllElements
 
-    removeChild(element: TypesettingElement): void
+    removeChild(element: AllElements): void
 
     // for parentElement appendChild method
-    setParentElement(parentElement: TypesettingElement): void
+    setParentElement(parentElement: NotTextElements): void
 
     // from Element interface
     readonly classList: DOMTokenList
