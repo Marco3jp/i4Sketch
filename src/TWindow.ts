@@ -1,12 +1,12 @@
 import {TypesettingWindow} from "~/src/interface/TypesettingWindow";
-import {TypesettingElement} from "~/src/interface/TypesettingElement";
+import {AllElements} from "~/src/TypeAlias";
 
 export class TWindow implements TypesettingWindow {
-    readonly childElements: Array<TypesettingElement>;
+    readonly childElements: Array<AllElements>;
     windowName?: string;
 
-    constructor(windowName?: string) {
-        this.childElements = [];
-        this.windowName = windowName !== undefined ? windowName : "";
+    constructor(windowName?: string, childElements?: Array<AllElements>) {
+        this.childElements = childElements ?? [];
+        this.windowName = windowName ?? "";
     }
 }
