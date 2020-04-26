@@ -1,11 +1,18 @@
-import {TextElement as TextElementInterface} from "~/src/interface/TextElement";
+import {TextElement as TextElementInterface, TextElementOptions} from "~/src/interface/TextElement";
+import {AllElements, NotTextElements} from "~/src/TypeAlias";
 
 export class TextElement implements TextElementInterface {
     readonly tagName: "#text";
     value: string;
+    parentElement: NotTextElements | null;
 
-    constructor(value?: string) {
+    constructor(options?: TextElementOptions) {
         this.tagName = "#text";
-        this.value = value !== undefined ? value : "";
+        this.value = options?.value ?? "";
+        this.parentElement = options?.parentElement ?? null;
+    }
+
+    setParentElement(parentElement: NotTextElements): void {
+        this.parentElement = parentElement;
     }
 }
