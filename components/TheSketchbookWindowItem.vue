@@ -7,8 +7,8 @@
 
 <script lang="ts">
     import Vue, {PropOptions} from 'vue';
-    import {TypesettingWindow} from "~/src/interface/TypesettingWindow";
     import ElementCreator from "~/components/ElementCreator";
+    import {AllElements} from "~/src/TypeAlias";
 
     export default Vue.extend({
         name: "TheSketchbookWindowItem",
@@ -19,7 +19,7 @@
             windowData: {
                 type: Object,
                 required: true
-            } as PropOptions<TypesettingWindow>
+            } as PropOptions<AllElements>
         }
     });
 </script>
