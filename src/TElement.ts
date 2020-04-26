@@ -38,9 +38,16 @@ export class TElement implements TypesettingElement {
         // this.classList = new DOMTokenList();
         // this.style = new CSSStyleDeclaration();
         this.tagName = tagName;
-        this.childElements = options?.childElements ?? [];
         this.id = options?.id ?? "";
         this.categories = options?.categories ?? [];
         this.contentModel = options?.contentModel ?? [];
+        this.childElements = options?.childElements ?? [];
+
+        // appendChildと同じ動きをするために子に入る要素に親を登録
+        this.childElements.forEach(childElement => {
+            if (childElement.parentElement === null) {
+                childElement.setParentElement(this);
+            }
+        })
     }
 }
