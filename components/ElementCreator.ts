@@ -1,13 +1,10 @@
 import Vue, {PropOptions, VNode} from 'vue'
-import {TypesettingElement} from "~/src/interface/TypesettingElement";
 import {TypesettingAnchorElement} from "~/src/interface/TypesettingAnchorElement";
 import {TypesettingImageElement} from "~/src/interface/TypesettingImageElement";
 import {TextElement} from "~/src/interface/TextElement";
 import {CategoriesEnum} from "~/src/HTMLSpecReference/enum/categoriesEnum";
 import {TagNamesEnum} from "~/src/HTMLSpecReference/enum/tagNamesEnum";
-
-type NotTextElements = TypesettingElement | TypesettingAnchorElement | TypesettingImageElement;
-type AllElements = NotTextElements | TextElement
+import {AllElements, NotTextElements} from "~/src/TypeAlias";
 
 function getAttrs(element: NotTextElements): object {
     switch (element.tagName) {
