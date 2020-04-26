@@ -3,6 +3,7 @@ import {CategoriesEnum} from "~/src/HTMLSpecReference/enum/categoriesEnum";
 import {TypesettingImageElement} from "~/src/interface/TypesettingImageElement";
 import {TypesettingAnchorElement} from "~/src/interface/TypesettingAnchorElement";
 import {TagNamesEnum} from "~/src/HTMLSpecReference/enum/tagNamesEnum";
+import {AllElements} from "~/src/TypeAlias";
 
 export interface TypesettingElement {
     // from Node interface
@@ -27,4 +28,11 @@ export interface TypesettingElement {
     // from HTML Spec
     readonly categories: Array<CategoriesEnum>
     readonly contentModel: Array<CategoriesEnum>
+}
+
+export interface TypesettingElementOptions {
+    categories: Array<CategoriesEnum>
+    contentModel: Array<CategoriesEnum>
+    id?: string
+    childElements?: Array<AllElements>
 }
