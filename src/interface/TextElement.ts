@@ -1,8 +1,7 @@
-import {TypesettingElement} from "~/src/interface/TypesettingElement";
-import {TypesettingAnchorElement} from "~/src/interface/TypesettingAnchorElement";
+import {NotTextElements} from "~/src/TypeAlias";
 
 export interface TextElement {
-    parentElement: TypesettingElement | TypesettingAnchorElement;
+    parentElement: NotTextElements | null;
     readonly tagName: "#text"
     value: string
 }
