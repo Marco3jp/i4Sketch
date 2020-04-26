@@ -33,14 +33,14 @@ export class TElement implements TypesettingElement {
         this.parentElement = parentElement;
     }
 
-    constructor(tagName: TagNamesEnum, categories: Array<CategoriesEnum>, contentModel: Array<CategoriesEnum>) {
-        this.childElements = [];
+    constructor(tagName: TagNamesEnum, options?: TypesettingElementOptions) {
         this.parentElement = null;
         this.classList = new DOMTokenList();
-        this.id = "";
         this.style = new CSSStyleDeclaration();
         this.tagName = tagName;
-        this.categories = categories;
-        this.contentModel = contentModel;
+        this.childElements = options?.childElements ?? [];
+        this.id = options?.id ?? "";
+        this.categories = options?.categories ?? [];
+        this.contentModel = options?.contentModel ?? [];
     }
 }
