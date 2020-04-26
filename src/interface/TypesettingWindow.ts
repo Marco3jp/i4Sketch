@@ -1,6 +1,6 @@
-import {TypesettingElement} from "~/src/interface/TypesettingElement";
+import {AllElements} from "~/src/TypeAlias";
 
 export interface TypesettingWindow {
-    readonly childElements: Array<TypesettingElement>
+    readonly childElements: Array<AllElements>
     windowName?: string
 }
