@@ -1,7 +1,6 @@
 import {MutationTree} from 'vuex'
 import {TypesettingWindow} from "~/src/interface/TypesettingWindow";
 import {TWindow} from "~/src/TWindow";
-import {AllElements} from "~/src/TypeAlias";
 
 export type RootState = ReturnType<typeof state>
 
