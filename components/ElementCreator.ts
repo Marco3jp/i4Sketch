@@ -1,10 +1,11 @@
 import Vue, {PropOptions, VNode} from 'vue'
 import {TypesettingAnchorElement} from "~/src/interface/TypesettingAnchorElement";
 import {TypesettingImageElement} from "~/src/interface/TypesettingImageElement";
-import {TextElement} from "~/src/interface/TextElement";
 import {CategoriesEnum} from "~/src/HTMLSpecReference/enum/categoriesEnum";
 import {TagNamesEnum} from "~/src/HTMLSpecReference/enum/tagNamesEnum";
 import {AllElements, NotTextElements} from "~/src/TypeAlias";
+import {TextElement} from "~/src/TextElement";
+import {TElement} from "~/src/TElement";
 
 function getAttrs(element: NotTextElements): object {
     switch (element.tagName) {
@@ -34,27 +35,26 @@ export default Vue.component('ElementCreator', {
     },
     render: function (createElement): VNode {
         // テキストノードの振り分け
-        if (this.element.tagName === "#text") {
+        if (this.element instanceof TextElement) {
             let characterElements: Array<VNode> = [];
-            for (let i = 0; i < (this.element as TextElement).value.length; i++) {
-                characterElements.push(createElement('span', (this.element as TextElement).value[i]));
+            for (let i = 0; i < this.element.value.length; i++) {
+                characterElements.push(createElement('span', this.element.value[i]));
             }
             return createElement('span', characterElements);
-        } else {
+        } else if (this.element instanceof TElement) {
             // 子に何も来ないもの
-            //if ((this.element as NotTextElements).contentModel.includes(CategoriesEnum.NOTHING)) {
-            if (this.element.tagName === "img") { // this.element instanceof TImageElement
+            if (this.element.contentModel.includes(CategoriesEnum.NOTHING)) {
                 return createElement(this.element.tagName, {
                     attrs: getAttrs(this.element)
                 });
             } else {
                 // それ以外の要素を生成して、子がいる場合は更に生成
-                if ((this.element as NotTextElements).childElements.length !== 0) {
+                if (this.element.childElements.length !== 0) {
                     let childElements: Array<VNode> = [];
-                    for (let i = 0; i < (this.element as NotTextElements).childElements.length; i++) {
+                    for (let i = 0; i < this.element.childElements.length; i++) {
                         childElements.push(createElement("element-creator", {
                             props: {
-                                element: (this.element as NotTextElements).childElements[i]
+                                element: this.element.childElements[i]
                             }
                         }));
                     }
@@ -67,6 +67,8 @@ export default Vue.component('ElementCreator', {
                     });
                 }
             }
+        } else {
+            return createElement('span', "Error Node");
         }
     }
 })
