@@ -1,53 +1,17 @@
 import {MutationTree} from 'vuex'
 import {TypesettingWindow} from "~/src/interface/TypesettingWindow";
 import {TWindow} from "~/src/TWindow";
+import {AllElements} from "~/src/TypeAlias";
 
 export type RootState = ReturnType<typeof state>
 
 export const state = () => ({
-    windows: [{
-        childElements: [{
-            childElements: [{tagName: "#text", value: "hello world"}],
-            tagName: "h1",
-        }, {
-            childElements: [{tagName: "#text", value: "this is sample text"}],
-            tagName: "p",
-        }, {
-            tagName: "img",
-            src: "https://ja.nuxtjs.org/logos/nuxt-icon-white.png"
-        }, {
-            childElements: [{
-                tagName: "a",
-                href: "https://example.com",
-                childElements: [{tagName: "#text", value: "this is sample link"}]
-            }],
-            tagName: "p",
-        }, {
-            tagName: "div",
-            childElements: [{
-                tagName: "h2",
-                childElements: [{
-                    tagName: "#text",
-                    value: "deep tree sample"
-                }]
-            }, {
-                tagName: "p",
-                childElements: [{
-                    tagName: "a",
-                    href: "https://github.com/Marco3jp/i4Sketch",
-                    childElements: [{
-                        tagName: "#text",
-                        value: "Let's Read Source code."
-                    }]
-                }]
-            }]
-        }],
-        windowName: "sample"
-    }] as Array<TypesettingWindow>
+    windows: [] as Array<TypesettingWindow>,
+    holdingElementLayout: undefined,
 });
 
 export const mutations: MutationTree<RootState> = {
-    createNewWindow(state, name?: string) {
-        state.windows.push(new TWindow(name));
-    }
+    createNewWindow(state, payload) {
+        state.windows.push(new TWindow(payload.name, payload.childElements));
+    },
 };
