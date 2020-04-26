@@ -1,5 +1,5 @@
 import {TextElement as TextElementInterface, TextElementOptions} from "~/src/interface/TextElement";
-import {AllElements, NotTextElements} from "~/src/TypeAlias";
+import {NotTextElements} from "~/src/TypeAlias";
 
 export class TextElement implements TextElementInterface {
     readonly tagName: "#text";
