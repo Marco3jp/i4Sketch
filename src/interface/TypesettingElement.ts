@@ -25,6 +25,9 @@ export interface TypesettingElement {
     // from HTML Spec
     readonly categories: Array<CategoriesEnum>
     readonly contentModel: Array<CategoriesEnum>
+
+    // for index management
+    readonly uuid: string
 }
 
 export interface TypesettingElementOptions {
