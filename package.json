@@ -1,23 +1,25 @@
 {
-  "name": "i4sketch",
-  "version": "1.0.0",
-  "description": "Experimental layout design web application.",
-  "author": "marco",
-  "private": true,
-  "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
-  },
-  "dependencies": {
-    "nuxt": "^2.0.0",
-    "prettier": "^2.0.4"
-  },
-  "devDependencies": {
-    "@nuxt/typescript-build": "^0.6.0",
-    "@types/prettier": "^2.0.0",
-    "node-sass": "^4.13.1",
-    "sass-loader": "^8.0.2"
-  }
+    "name": "i4sketch",
+    "version": "1.0.0",
+    "description": "Experimental layout design web application.",
+    "author": "marco",
+    "private": true,
+    "scripts": {
+        "dev": "nuxt",
+        "build": "nuxt build",
+        "start": "nuxt start",
+        "generate": "nuxt generate"
+    },
+    "dependencies": {
+        "nuxt": "^2.12.0",
+        "prettier": "^2.0.4",
+        "uuid": "^7.0.3"
+    },
+    "devDependencies": {
+        "@nuxt/typescript-build": "^0.6.0",
+        "@types/prettier": "^2.0.0",
+        "@types/uuid": "^7.0.3",
+        "node-sass": "^4.13.1",
+        "sass-loader": "^8.0.2"
+    }
 }
