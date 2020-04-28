@@ -1,7 +1,7 @@
 export enum DisplayOutsideEnum {
-    BLOCK,
-    INLINE,
+    BLOCK = "block",
+    INLINE = "inline",
 
     // experiment value, currently, W3C Candidate Recommendation.
-    RUNIN
+    RUNIN = "run-in"
 }
