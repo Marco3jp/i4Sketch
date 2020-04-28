@@ -10,6 +10,7 @@
 <script lang="ts">
     import Vue from 'vue';
     import ElementListSection from "~/components/ElementListSection.vue";
+    import {TagNamesEnum} from "~/src/HTMLSpecReference/enum/tagNamesEnum";
 
     export default Vue.extend({
         name: "ElementList",
@@ -19,8 +20,16 @@
         data() {
             return {
                 elementTagNames: {
-                    useful: ["h1", "p", "img", "div", "a", "ul", "li"],
-                    other: ["main", "article", "aside", "video", "canvas", "hoge", "hoge", "hoge", "hoge", "hoge",]
+                    useful: [
+                        TagNamesEnum.H1,
+                        TagNamesEnum.H2,
+                        TagNamesEnum.P,
+                        TagNamesEnum.IMG,
+                        TagNamesEnum.DIV,
+                        TagNamesEnum.A,
+                        TagNamesEnum.SPAN
+                    ],
+                    other: []
                 }
             }
         }
