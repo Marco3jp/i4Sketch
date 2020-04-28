@@ -6,10 +6,10 @@
     import Vue from 'vue';
     import prettier from "prettier/standalone";
     import htmlparser from "prettier/parser-html"
-    import {TypesettingElement} from '~/src/interface/TypesettingElement';
-    import {TextElement} from '~/src/interface/TextElement';
-    import {TypesettingAnchorElement} from "~/src/interface/TypesettingAnchorElement";
-    import {TypesettingImageElement} from "~/src/interface/TypesettingImageElement";
+    import {AllElements, NotTextElements} from "~/src/TypeAlias";
+    import {TextElement} from "~/src/TextElement";
+    import {TAnchorElement} from "~/src/TAnchorElement";
+    import {TImageElement} from "~/src/TImageElement";
 
     export default Vue.extend({
         name: "",
@@ -35,44 +35,29 @@
                 this.$store.commit("export/setExportedCode", exportString.trim());
                 this.$store.commit("view/showExportSourceCodeView");
             },
-
-            // TODO: Fix correctness...
-            // tagName -> instanceof, but need to fix sample tree building. (currently, those tree don't have constructor. so all statement return false)
-            getTreeSourceString(tree: Array<TypesettingElement | TypesettingAnchorElement | TypesettingImageElement | TextElement>, sourceString = ""): string {
+            getTreeSourceString(tree: Array<AllElements>, sourceString = ""): string {
                 tree.forEach(element => {
-                    if (element.tagName === "#text") {
-                        // @ts-ignore
+                    if (element instanceof TextElement) {
                         sourceString += element.value;
                         return sourceString;
                     } else {
-                        switch (element.tagName) {
-                            case "a":
-                                // @ts-ignore
-                                sourceString += `<${element.tagName}`;
-                                // @ts-ignore
-                                if (typeof element.href !== "undefined") {
-                                    // @ts-ignore
-                                    sourceString += ` href="${element.href}"`;
-                                }
-                                // @ts-ignore
-                                if (typeof element.target !== "undefined") {
-                                    // @ts-ignore
-                                    sourceString += ` target="${element.target}"`;
-                                }
-                                sourceString += ">";
-                                break;
-                            case "img":
-                                // @ts-ignore
-                                sourceString += `<${element.tagName} src="${element.src}">`;
-                                break;
-                            default:
-                                sourceString += `<${element.tagName}>`;
+                        if (element instanceof TAnchorElement) {
+                            sourceString += `<${element.tagName}`;
+                            if (typeof element.href !== "undefined") {
+                                sourceString += ` href="${element.href}"`;
+                            }
+                            if (typeof element.target !== "undefined") {
+                                sourceString += ` target="${element.target}"`;
+                            }
+                            sourceString += ">";
+                        } else if (element instanceof TImageElement) {
+                            sourceString += `<${element.tagName} src="${element.src}">`;
+                        } else {
+                            sourceString += `<${element.tagName}>`;
                         }
 
-                        // @ts-ignore
-                        if (typeof element.childElements !== "undefined" && element.childElements.length > 0) {
-                            // @ts-ignore
-                            sourceString = this.getTreeSourceString(element.childElements, sourceString);
+                        if ((element as NotTextElements)?.childElements.length > 0) {
+                            sourceString = this.getTreeSourceString((element as NotTextElements).childElements, sourceString);
                         }
 
                         if (element.tagName !== "img") {
