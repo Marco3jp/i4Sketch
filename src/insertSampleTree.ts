@@ -82,9 +82,8 @@ export function insertSampleTree(store: Store<any>) {
         ],
     })];
 
-    store.commit("structure/createNewWindow", {
+    store.dispatch("structure/createNewWindow", {
         name: "sample window",
         childElements: tree
     });
-
 }
