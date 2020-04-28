@@ -17,6 +17,8 @@ export function getElementContentModel(tagName: TagNamesEnum): Array<CategoriesE
             return [CategoriesEnum.PHRASING]
         case TagNamesEnum.IMG:
             return [CategoriesEnum.NOTHING]
+        case TagNamesEnum.SPAN:
+            return [CategoriesEnum.PHRASING]
         default:
             return []
     }

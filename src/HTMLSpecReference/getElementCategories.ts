@@ -17,8 +17,9 @@ export function getElementCategories(tagName: TagNamesEnum): Array<CategoriesEnu
             return [CategoriesEnum.FLOW, CategoriesEnum.HEADING]
         case TagNamesEnum.IMG:
             return [CategoriesEnum.FLOW, CategoriesEnum.PHRASING, CategoriesEnum.EMBEDDED]
+        case TagNamesEnum.SPAN:
+            return [CategoriesEnum.FLOW, CategoriesEnum.PHRASING]
         default:
             return []
     }
-
 }
