@@ -140,7 +140,7 @@ export default Vue.component('ElementCreator', {
                             event.preventDefault();
                             console.log("dropped");
                             self.$store.dispatch("structure/insertAdjustElement", {
-                                position: 'afterend',
+                                position: 'beforeend',
                                 targetElementUuid: self.element.uuid,
                                 newElement: createElementByTagName(self.$store.state.structure.holdingElementName),
                                 indexOf: self.indexOf
