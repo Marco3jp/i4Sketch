@@ -6,7 +6,7 @@ export function getElementCategories(tagName: TagNamesEnum): Array<CategoriesEnu
         case TagNamesEnum.A:
             return [CategoriesEnum.FLOW, CategoriesEnum.PHRASING]
         case TagNamesEnum.P:
-            return [CategoriesEnum.FLOW, CategoriesEnum.PHRASING]
+            return [CategoriesEnum.FLOW]
         case TagNamesEnum.DIV:
             return [CategoriesEnum.FLOW]
         case TagNamesEnum.H1:
