@@ -31,7 +31,7 @@ export interface TypesettingElement {
 }
 
 export interface TypesettingElementOptions {
-    categories?: Array<CategoriesEnum>
+    categories?: Array<CategoriesEnum> // TODO: ここを不要にして内部で検索する
     contentModel?: Array<CategoriesEnum>
     id?: string
     childElements?: Array<AllElements>
