@@ -1,3 +1,4 @@
+import {v4 as uuidv4} from 'uuid';
 import {TypesettingElement, TypesettingElementOptions} from "~/src/interface/TypesettingElement";
 import {CategoriesEnum} from "~/src/HTMLSpecReference/enum/categoriesEnum";
 import {TagNamesEnum} from "~/src/HTMLSpecReference/enum/tagNamesEnum";
@@ -12,7 +13,7 @@ export class TElement implements TypesettingElement {
     readonly tagName: TagNamesEnum;
     readonly categories: Array<CategoriesEnum>;
     readonly contentModel: Array<CategoriesEnum>;
-
+    readonly uuid: string;
 
     appendChild(element: AllElements): AllElements {
         this.childElements.push(element);
@@ -42,6 +43,7 @@ export class TElement implements TypesettingElement {
         this.categories = options?.categories ?? [];
         this.contentModel = options?.contentModel ?? [];
         this.childElements = options?.childElements ?? [];
+        this.uuid = uuidv4();
 
         // appendChildと同じ動きをするために子に入る要素に親を登録
         this.childElements.forEach(childElement => {
