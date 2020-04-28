@@ -31,7 +31,11 @@ export default Vue.component('ElementCreator', {
         element: {
             type: Object,
             required: true
-        } as PropOptions<AllElements>
+        } as PropOptions<AllElements>,
+        indexOf: {
+            type: Number,
+            required: true
+        }
     },
     render: function (createElement): VNode {
         // テキストノードの振り分け

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <element-creator v-for="(element, index) in windowData.childElements" :key="index"
-                         :element="element"></element-creator>
+        <element-creator v-for="(element, index) in windowData.childElements" :key="element.uuid"
+                         :element="element" :indexOf="index"></element-creator>
     </div>
 </template>
 
