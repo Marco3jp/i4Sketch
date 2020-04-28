@@ -8,6 +8,7 @@ import {TextElement} from "~/src/TextElement";
 import {TElement} from "~/src/TElement";
 import {DisplayOutsideEnum} from "~/src/HTMLSpecReference/enum/displayOutsideEnum";
 import {createElementByTagName} from "~/src/createElementByTagName";
+import {getElementDisplayOutside} from "~/src/HTMLSpecReference/getElementDisplayOutside";
 
 function getAttrs(element: NotTextElements): object {
     switch (element.tagName) {
@@ -69,25 +70,29 @@ export default Vue.component('ElementCreator', {
                                     return (self.$store.state.structure.holdingElementCategories as Array<CategoriesEnum>).includes(category);
                                 })
                             }
-                            console.log(self.isEnterDrag, self.isDroppable);
+                            console.log(self.element.tagName, self.$store.state.structure.holdingElementName, self.isDroppable);
                             // self.$emit("reverseBubblesMouseEnter");
                         },
                         dragleave: function () {
                             self.isEnterDrag = false;
                             self.isDroppable = false;
-                            console.log(self.isEnterDrag, self.isDroppable);
                             // self.$emit("reverseBubblesMouseEnter");
                         }
                     },
                 }
 
+
                 let optionsDropAreaElement: VNodeData = {
                     style: {
-                        display: self.isEnterDrag && self.isDroppable ? undefined : "none"
+                        display: self.isEnterDrag && self.isDroppable ? null : "none"
                     },
                     class: {
-                        "new-element-drop-area-block": self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.BLOCK,
-                        "new-element-drop-area-inline": self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.INLINE,
+                        "new-element-drop-area-block":
+                            getElementDisplayOutside((self.element as NotTextElements).tagName) !== DisplayOutsideEnum.INLINE ||
+                            self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.BLOCK,
+                        "new-element-drop-area-inline":
+                            getElementDisplayOutside((self.element as NotTextElements).tagName) === DisplayOutsideEnum.INLINE ||
+                            self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.INLINE,
                         // "new-element-drop-area-run-in": self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.RUNIN,
                     }
                 };
