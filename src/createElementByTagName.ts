@@ -17,14 +17,8 @@ export function createElementByTagName(tag: TagNamesEnum) {
                 categories: getElementCategories(tag),
                 contentModel: getElementContentModel(tag),
                 childElements: [
-                    new TElement(tag, {
-                        categories: getElementCategories(tag),
-                        contentModel: getElementContentModel(tag),
-                        childElements: [
-                            new TextElement({
-                                value: "Sample Span Value!"
-                            })
-                        ]
+                    new TextElement({
+                        value: "Sample Span Value!"
                     })
                 ]
             })
