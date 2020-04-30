@@ -19,6 +19,10 @@
                 setTimeout(() => {
                     this.$store.commit("structure/releaseNewElement");
                 }, 200);
+                document.querySelectorAll(".outer-new-element-drop-area").forEach(elm => {
+                    // @ts-ignore
+                    elm.style.display = "none";
+                })
             }
         }
     });
