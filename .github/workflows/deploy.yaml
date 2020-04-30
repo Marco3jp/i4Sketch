@@ -1,0 +1,39 @@
+name: deploy project to GitHub Pages
+
+on:
+    push:
+        branches:
+            - master
+
+jobs:
+    build-deploy:
+        runs-on: ubuntu-18.04
+
+        steps:
+            -   uses: actions/checkout@v2
+
+            -   name: Setup node ${{ matrix.node-version }}
+                uses: actions/setup-node@v1
+                with:
+                    node-version: '12.x'
+
+            -   name: Cache Node.js modules
+                uses: actions/cache@v1
+                with:
+                    path: ~/.yarn
+                    key: ${{ runner.OS }}-node-${{ hashFiles('**/yarn.lock') }}
+                    restore-keys: |
+                        ${{ runner.OS }}-node-
+                        ${{ runner.OS }}-
+
+            -   name: Install dependencies
+                run: yarn --frozen-lockfile
+
+            -   name: Generate
+                run: yarn run gh-pages:generate
+
+            -   name: Deploy
+                uses: peaceiris/actions-gh-pages@v3
+                with:
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+                    publish_dir: ./dist
