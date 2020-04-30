@@ -44,7 +44,23 @@ export default Vue.component('ElementCreator', {
         return {
             isEnterDrag: false,
             isDroppable: false,
+            enterDragChildElementIndex: undefined as number | undefined,
+            isDroppableChildElement: false,
         }
+    },
+    methods: {
+        resetOuterDropArea() {
+            // @ts-ignore
+            this.$refs[`TopOuterDropArea${this.enterDragChildElementIndex}`].style.display = "none";
+            // @ts-ignore
+            this.$refs[`BottomOuterDropArea${this.enterDragChildElementIndex}`].style.display = "none";
+            this.enterDragChildElementIndex = undefined;
+            this.isDroppableChildElement = false;
+        },
+        resetInnerDropArea() {
+            this.isEnterDrag = false;
+            this.isDroppable = false;
+        },
     },
     render: function (createElement): VNode {
         let self = this;
@@ -61,6 +77,164 @@ export default Vue.component('ElementCreator', {
                     attrs: getAttrs(this.element)
                 });
             } else {
+                let eventListenerDroppableElement = {
+                    dragenter: function (event: DragEvent) {
+                        event.preventDefault();
+                    },
+                    dragover: function (event: DragEvent) {
+                        event.preventDefault();
+                    },
+                }
+
+                let optionsOuterDropAreaElement: VNodeData = {
+                    style: {
+                        display: "none"
+                    },
+                    class: {
+                        "outer-new-element-drop-area": true,
+                        "new-element-drop-area-block":
+                            getElementDisplayOutside((self.element as NotTextElements).tagName) !== DisplayOutsideEnum.INLINE ||
+                            self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.BLOCK,
+                        "new-element-drop-area-inline":
+                            getElementDisplayOutside((self.element as NotTextElements).tagName) === DisplayOutsideEnum.INLINE ||
+                            self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.INLINE,
+                        // "new-element-drop-area-run-in": self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.RUNIN,
+                    },
+                }
+
+                let childElements: Array<VNode> = [];
+                // それ以外の要素を生成して、子がいる場合は更に生成
+                if (this.element.childElements.length !== 0) {
+                    for (let i = 0; i < this.element.childElements.length; i++) {
+                        if (this.element.childElements[i] instanceof TextElement) {
+                            childElements.push(createElement("element-creator", {
+                                props: {
+                                    element: this.element.childElements[i],
+                                    indexOf: i,
+                                },
+                                key: this.element.childElements[i].uuid,
+                            }));
+
+                        } else {
+                            // insert outer top side drop area
+                            childElements.push(createElement("div", {
+                                ...optionsOuterDropAreaElement,
+                                on: {
+                                    drop: function (event: DragEvent) {
+                                        event.preventDefault();
+                                        self.$store.dispatch("structure/insertAdjustElement", {
+                                            position: 'beforebegin',
+                                            targetElementUuid: (self.element as NotTextElements).childElements[i].uuid,
+                                            newElement: createElementByTagName(self.$store.state.structure.holdingElementName),
+                                            indexOf: i
+                                        });
+                                        self.resetOuterDropArea();
+                                    },
+                                    dragleave: function () {
+                                        self.resetOuterDropArea();
+                                    },
+                                    ...eventListenerDroppableElement
+                                },
+                                ref: `TopOuterDropArea${i}`
+                            }));
+                            childElements.push(createElement("element-creator", {
+                                props: {
+                                    element: this.element.childElements[i],
+                                    indexOf: i,
+                                },
+                                key: this.element.childElements[i].uuid,
+                                on: {
+                                    "reverse-bubbles-dragover": function (index: number) {
+                                        self.enterDragChildElementIndex = index;
+                                        if (typeof self.$store.state.structure.holdingElementCategories !== "undefined") {
+                                            self.isDroppableChildElement = (self.element as TElement).contentModel.every((category) => {
+                                                return (self.$store.state.structure.holdingElementCategories as Array<CategoriesEnum>).includes(category);
+                                            })
+                                            if (self.isDroppableChildElement) {
+                                                // @ts-ignore
+                                                self.$refs[`TopOuterDropArea${index}`].style.display = null;
+                                                // @ts-ignore
+                                                self.$refs[`BottomOuterDropArea${index}`].style.display = null;
+                                            }
+                                        }
+                                    },
+                                }
+                            }));
+                            // insert outer bottom side drop area
+                            childElements.push(createElement("div", {
+                                ...optionsOuterDropAreaElement,
+                                on: {
+                                    drop: function (event: DragEvent) {
+                                        event.preventDefault();
+                                        self.$store.dispatch("structure/insertAdjustElement", {
+                                            position: 'afterend',
+                                            targetElementUuid: (self.element as NotTextElements).childElements[i].uuid,
+                                            newElement: createElementByTagName(self.$store.state.structure.holdingElementName),
+                                            indexOf: i
+                                        })
+                                        self.resetOuterDropArea();
+                                    },
+                                    dragleave: function () {
+                                        self.resetOuterDropArea();
+                                    },
+                                    ...eventListenerDroppableElement
+                                },
+                                ref: `BottomOuterDropArea${i}`
+                            }));
+                        }
+                    }
+                }
+
+                let optionsInnerDropAreaElement: VNodeData = {
+                    style: {
+                        display: self.isEnterDrag && self.isDroppable ? null : "none",
+                    },
+                    class: {
+                        "inner-new-element-drop-area": true,
+                        "new-element-drop-area-block":
+                            getElementDisplayOutside((self.element as NotTextElements).tagName) !== DisplayOutsideEnum.INLINE ||
+                            self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.BLOCK,
+                        "new-element-drop-area-inline":
+                            getElementDisplayOutside((self.element as NotTextElements).tagName) === DisplayOutsideEnum.INLINE ||
+                            self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.INLINE,
+                        // "new-element-drop-area-run-in": self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.RUNIN,
+                    },
+                };
+
+                // insert inner top side drop area
+                childElements.unshift(createElement("div", {
+                    on: {
+                        drop: function (event: DragEvent) {
+                            event.preventDefault();
+                            self.$store.dispatch("structure/insertAdjustElement", {
+                                position: 'afterbegin',
+                                targetElementUuid: self.element.uuid,
+                                newElement: createElementByTagName(self.$store.state.structure.holdingElementName),
+                            })
+                            self.resetInnerDropArea();
+                        },
+                        ...eventListenerDroppableElement
+                    },
+                    ...optionsInnerDropAreaElement,
+                }))
+
+                // insert inner bottom side drop area
+                childElements.push(createElement("div", {
+                    on: {
+                        drop: function (event: DragEvent) {
+                            event.preventDefault();
+                            self.$store.dispatch("structure/insertAdjustElement", {
+                                position: 'beforeend',
+                                targetElementUuid: self.element.uuid,
+                                newElement: createElementByTagName(self.$store.state.structure.holdingElementName),
+                            })
+                            self.resetInnerDropArea();
+                        },
+                        ...eventListenerDroppableElement
+                    },
+                    ...optionsInnerDropAreaElement,
+                }))
+
                 let optionsNewElement: VNodeData = {
                     on: {
                         dragover: function () {
@@ -70,90 +244,13 @@ export default Vue.component('ElementCreator', {
                                     return (self.$store.state.structure.holdingElementCategories as Array<CategoriesEnum>).includes(category);
                                 })
                             }
-                            console.log(self.element.tagName, self.$store.state.structure.holdingElementName, self.isDroppable);
-                            // self.$emit("reverseBubblesMouseEnter");
+                            self.$emit("reverse-bubbles-dragover", self.indexOf);
                         },
                         dragleave: function () {
-                            self.isEnterDrag = false;
-                            self.isDroppable = false;
-                            // self.$emit("reverseBubblesMouseEnter");
-                        }
+                            self.resetInnerDropArea();
+                        },
                     },
                 }
-
-
-                let optionsDropAreaElement: VNodeData = {
-                    style: {
-                        display: self.isEnterDrag && self.isDroppable ? null : "none"
-                    },
-                    class: {
-                        "new-element-drop-area-block":
-                            getElementDisplayOutside((self.element as NotTextElements).tagName) !== DisplayOutsideEnum.INLINE ||
-                            self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.BLOCK,
-                        "new-element-drop-area-inline":
-                            getElementDisplayOutside((self.element as NotTextElements).tagName) === DisplayOutsideEnum.INLINE ||
-                            self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.INLINE,
-                        // "new-element-drop-area-run-in": self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.RUNIN,
-                    }
-                };
-
-                let childElements: Array<VNode> = [];
-                // それ以外の要素を生成して、子がいる場合は更に生成
-                if (this.element.childElements.length !== 0) {
-                    for (let i = 0; i < this.element.childElements.length; i++) {
-                        childElements.push(createElement("element-creator", {
-                            props: {
-                                element: this.element.childElements[i],
-                                indexOf: i,
-                            },
-                            key: this.element.childElements[i].uuid
-                        }));
-                    }
-                }
-
-                childElements.unshift(createElement("div", {
-                    ...optionsDropAreaElement,
-                    on: {
-                        drop: function (event: DragEvent) {
-                            event.preventDefault();
-                            console.log("dropped");
-                            self.$store.dispatch("structure/insertAdjustElement", {
-                                position: 'afterbegin',
-                                targetElementUuid: self.element.uuid,
-                                newElement: createElementByTagName(self.$store.state.structure.holdingElementName),
-                                indexOf: self.indexOf
-                            })
-                        },
-                        dragenter: function (event: DragEvent) {
-                            event.preventDefault();
-                        },
-                        dragover: function (event: DragEvent) {
-                            event.preventDefault();
-                        },
-                    }
-                }))
-
-                childElements.push(createElement("div", {
-                    ...optionsDropAreaElement,
-                    on: {
-                        drop: function (event: DragEvent) {
-                            event.preventDefault();
-                            console.log("dropped");
-                            self.$store.dispatch("structure/insertAdjustElement", {
-                                position: 'beforeend',
-                                targetElementUuid: self.element.uuid,
-                                newElement: createElementByTagName(self.$store.state.structure.holdingElementName),
-                                indexOf: self.indexOf
-                            })
-                        },
-                        dragenter: function (event: DragEvent) {
-                            event.preventDefault();
-                        },
-                        dragover: function (event: DragEvent) {
-                            event.preventDefault();
-                        },
-                    }
-                }))
 
                 return createElement(this.element.tagName, {
                     attrs: getAttrs(this.element),
