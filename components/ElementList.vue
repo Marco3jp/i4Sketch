@@ -1,9 +1,9 @@
 <template>
     <div>
-        <h2>useful elements</h2>
-        <element-list-section :tag-names="elementTagNames.useful"></element-list-section>
-        <h2>other elements</h2>
-        <element-list-section :tag-names="elementTagNames.other"></element-list-section>
+        <h2>sample value</h2>
+        <element-list-section :tag-names="elementTagNames.hasSampleValue"></element-list-section>
+        <h2 title="内部的にはちゃんと挿入されるけど表示領域がないのでわかりにくいです">no sample value *</h2>
+        <element-list-section :tag-names="elementTagNames.noSampleValue"></element-list-section>
     </div>
 </template>
 
@@ -20,16 +20,17 @@
         data() {
             return {
                 elementTagNames: {
-                    useful: [
+                    hasSampleValue: [
+                        TagNamesEnum.P,
+                        TagNamesEnum.SPAN,
+                    ],
+                    noSampleValue: [
                         TagNamesEnum.H1,
                         TagNamesEnum.H2,
-                        TagNamesEnum.P,
                         TagNamesEnum.IMG,
                         TagNamesEnum.DIV,
                         TagNamesEnum.A,
-                        TagNamesEnum.SPAN
-                    ],
-                    other: []
+                    ]
                 }
             }
         }
