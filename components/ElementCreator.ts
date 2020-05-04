@@ -78,39 +78,33 @@ export default Vue.component('ElementCreator', {
             }
             return createElement('span', characterElements);
         } else if (this.element instanceof TElement) {
-            // 子に何も来ないもの
-            if (this.element.contentModel.includes(CategoriesEnum.NOTHING)) {
-                return createElement(this.element.tagName, {
-                    attrs: getAttrs(this.element)
-                });
-            } else {
-                let eventListenerDroppableElement = {
-                    dragenter: function (event: DragEvent) {
-                        event.preventDefault();
-                    },
-                    dragover: function (event: DragEvent) {
-                        event.preventDefault();
-                    },
-                }
+            let eventListenerDroppableElement = {
+                dragenter: function (event: DragEvent) {
+                    event.preventDefault();
+                },
+                dragover: function (event: DragEvent) {
+                    event.preventDefault();
+                },
+            }
 
-                let optionsOuterDropAreaElement: VNodeData = {
-                    style: {
-                        display: "none"
-                    },
-                    class: {
-                        "outer-new-element-drop-area": true,
-                        "new-element-drop-area-block":
-                            getElementDisplayOutside((self.element as NotTextElements).tagName) !== DisplayOutsideEnum.INLINE ||
-                            self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.BLOCK,
-                        "new-element-drop-area-inline":
-                            getElementDisplayOutside((self.element as NotTextElements).tagName) === DisplayOutsideEnum.INLINE ||
-                            self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.INLINE,
-                        // "new-element-drop-area-run-in": self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.RUNIN,
-                    },
-                }
+            let optionsOuterDropAreaElement: VNodeData = {
+                style: {
+                    display: "none"
+                },
+                class: {
+                    "outer-new-element-drop-area": true,
+                    "new-element-drop-area-block":
+                        getElementDisplayOutside((self.element as NotTextElements).tagName) !== DisplayOutsideEnum.INLINE ||
+                        self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.BLOCK,
+                    "new-element-drop-area-inline":
+                        getElementDisplayOutside((self.element as NotTextElements).tagName) === DisplayOutsideEnum.INLINE ||
+                        self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.INLINE,
+                    // "new-element-drop-area-run-in": self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.RUNIN,
+                },
+            }
 
-                let childElements: Array<VNode> = [];
-                // それ以外の要素を生成して、子がいる場合は更に生成
+            let childElements: Array<VNode> = [];
+            if (!this.element.contentModel.includes(CategoriesEnum.NOTHING)) {
                 if (this.element.childElements.length !== 0) {
                     for (let i = 0; i < this.element.childElements.length; i++) {
                         if (this.element.childElements[i] instanceof TextElement) {
@@ -241,29 +235,29 @@ export default Vue.component('ElementCreator', {
                     },
                     ...optionsInnerDropAreaElement,
                 }))
-
-                let optionsNewElement: VNodeData = {
-                    on: {
-                        dragover: function () {
-                            self.isEnterDrag = true;
-                            if (typeof self.$store.state.structure.holdingElementCategories !== "undefined") {
-                                self.isDroppable = (self.element as TElement).contentModel.every((category) => {
-                                    return (self.$store.state.structure.holdingElementCategories as Array<CategoriesEnum>).includes(category);
-                                })
-                            }
-                            self.$emit("reverse-bubbles-dragover", self.indexOf);
-                        },
-                        dragleave: function () {
-                            self.resetInnerDropArea();
-                        },
-                    },
-                }
-
-                return createElement(this.element.tagName, {
-                    attrs: getAttrs(this.element),
-                    ...optionsNewElement
-                }, childElements);
             }
+
+            let optionsNewElement: VNodeData = {
+                on: {
+                    dragover: function () {
+                        self.isEnterDrag = true;
+                        if (typeof self.$store.state.structure.holdingElementCategories !== "undefined") {
+                            self.isDroppable = (self.element as TElement).contentModel.every((category) => {
+                                return (self.$store.state.structure.holdingElementCategories as Array<CategoriesEnum>).includes(category);
+                            })
+                        }
+                        self.$emit("reverse-bubbles-dragover", self.indexOf);
+                    },
+                    dragleave: function () {
+                        self.resetInnerDropArea();
+                    },
+                },
+            }
+
+            return createElement(this.element.tagName, {
+                attrs: getAttrs(this.element),
+                ...optionsNewElement
+            }, childElements);
         } else {
             return createElement('span', "Error Node");
         }
