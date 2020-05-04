@@ -11,20 +11,27 @@ import {createElementByTagName} from "~/src/createElementByTagName";
 import {getElementDisplayOutside} from "~/src/HTMLSpecReference/getElementDisplayOutside";
 
 function getAttrs(element: NotTextElements): object {
+    const tElementAttrs = {
+        id: element.id
+    }
     switch (element.tagName) {
         case TagNamesEnum.A:
             return {
                 href: (element as TypesettingAnchorElement).href,
                 target: (element as TypesettingAnchorElement).target,
-                download: (element as TypesettingAnchorElement).download
+                download: (element as TypesettingAnchorElement).download,
+                ...tElementAttrs
             }
         case TagNamesEnum.IMG:
             return {
                 src: (element as TypesettingImageElement).src,
                 alt: (element as TypesettingImageElement).alt,
+                ...tElementAttrs
             }
         default:
-            return {}
+            return {
+                ...tElementAttrs
+            }
     }
 }
 
