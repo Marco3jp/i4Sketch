@@ -8,22 +8,19 @@
                 Experimental layout design web application.
             </h2>
             <div class="links">
-                <a
-                    href="https://nuxtjs.org/"
-                    target="_blank"
-                    class="button--green"
-                >
-                    Documentation
-                </a>
-                <a
-                    href="https://github.com/nuxt/nuxt.js"
-                    target="_blank"
-                    class="button--grey"
-                >
+                <a href="https://github.com/Marco3jp/i4Sketch"
+                   target="_blank"
+                   class="button button--green">
                     GitHub
                 </a>
 
-                <nuxt-link to="/editor" class="button--grey">
+                <a href="https://github.com/Marco3jp/i4Sketch/issues"
+                   target="_blank"
+                   class="button button--orange">
+                    Issues
+                </a>
+
+                <nuxt-link to="/editor" class="button button--grey">
                     Go to Sketchbook!
                 </nuxt-link>
             </div>
@@ -39,7 +36,7 @@
     })
 </script>
 
-<style>
+<style lang="scss" scoped>
     .container {
         margin: 0 auto;
         min-height: 100vh;
@@ -69,5 +66,48 @@
 
     .links {
         padding-top: 15px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .button {
+        display: block;
+        border-radius: 4px;
+        text-decoration: none;
+        padding: 10px 30px;
+
+        &:not(:first-of-type) {
+            margin-left: 20px;
+        }
+    }
+
+    .button--green {
+        border: 1px solid #3b8070;
+        color: #3b8070;
+    }
+
+    .button--green:hover {
+        color: #fff;
+        background-color: #3b8070;
+    }
+
+    .button--orange {
+        border: 1px solid #FF6F00;
+        color: #FF6F00;
+    }
+
+    .button--orange:hover {
+        color: #fff;
+        background-color: #FF6F00;
+    }
+
+    .button--grey {
+        border: 1px solid #35495e;
+        color: #35495e;
+    }
+
+    .button--grey:hover {
+        color: #fff;
+        background-color: #35495e;
     }
 </style>
