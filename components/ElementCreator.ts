@@ -53,7 +53,8 @@ export default Vue.component('ElementCreator', {
             isDroppable: false,
             enterDragChildElementIndex: undefined as number | undefined,
             isDroppableChildElement: false,
-            leaveCounter: 0
+            innerLeaveCounter: 0,
+            outerLeaveCounter: [] as Array<number>
         }
     },
     methods: {
@@ -108,6 +109,7 @@ export default Vue.component('ElementCreator', {
             if (!this.element.contentModel.includes(CategoriesEnum.NOTHING)) {
                 if (this.element.childElements.length !== 0) {
                     for (let i = 0; i < this.element.childElements.length; i++) {
+                        this.outerLeaveCounter.push(0);
                         if (this.element.childElements[i] instanceof TextElement) {
                             childElements.push(createElement("element-creator", {
                                 props: {
@@ -133,9 +135,18 @@ export default Vue.component('ElementCreator', {
                                         self.resetOuterDropArea();
                                     },
                                     dragleave: function () {
-                                        self.resetOuterDropArea();
+                                        self.outerLeaveCounter[i]--;
+                                        if (self.outerLeaveCounter[i] === 0) {
+                                            self.resetOuterDropArea();
+                                        }
                                     },
-                                    ...eventListenerDroppableElement
+                                    dragenter: function (event: DragEvent) {
+                                        self.outerLeaveCounter[i]++;
+                                        event.preventDefault();
+                                    },
+                                    dragover: function (event: DragEvent) {
+                                        event.preventDefault();
+                                    },
                                 },
                                 ref: `TopOuterDropArea${i}`
                             }));
@@ -160,11 +171,13 @@ export default Vue.component('ElementCreator', {
                                             }
                                         }
                                     },
-                                    "bubbles-dragenter": function () {
-                                        self.leaveCounter++;
+                                    "bubbles-dragenter": function (index: number) {
+                                        self.outerLeaveCounter[index]++;
+                                        self.innerLeaveCounter++;
                                     },
-                                    "bubbles-dragleave": function () {
-                                        self.leaveCounter--;
+                                    "bubbles-dragleave": function (index: number) {
+                                        self.outerLeaveCounter[index]--;
+                                        self.innerLeaveCounter--;
                                     }
                                 }
                             }));
@@ -183,9 +196,18 @@ export default Vue.component('ElementCreator', {
                                         self.resetOuterDropArea();
                                     },
                                     dragleave: function () {
-                                        self.resetOuterDropArea();
+                                        self.outerLeaveCounter[i]--;
+                                        if (self.outerLeaveCounter[i] === 0) {
+                                            self.resetOuterDropArea();
+                                        }
                                     },
-                                    ...eventListenerDroppableElement
+                                    dragenter: function (event: DragEvent) {
+                                        self.outerLeaveCounter[i]++;
+                                        event.preventDefault();
+                                    },
+                                    dragover: function (event: DragEvent) {
+                                        event.preventDefault();
+                                    },
                                 },
                                 ref: `BottomOuterDropArea${i}`
                             }));
@@ -256,16 +278,16 @@ export default Vue.component('ElementCreator', {
                         self.$emit("bubbles-dragover", self.indexOf);
                     },
                     dragleave: function (event: DragEvent) {
-                        self.leaveCounter--;
-                        self.$emit("bubbles-dragleave");
+                        self.innerLeaveCounter--;
+                        self.$emit("bubbles-dragleave", self.indexOf);
                         event.stopPropagation();
-                        if (self.leaveCounter === 0) {
+                        if (self.innerLeaveCounter === 0) {
                             self.resetInnerDropArea();
                         }
                     },
                     dragenter: function (event: DragEvent) {
-                        self.leaveCounter++;
-                        self.$emit("bubbles-dragenter");
+                        self.innerLeaveCounter++;
+                        self.$emit("bubbles-dragenter", self.indexOf);
                         event.stopPropagation();
                     }
                 },
