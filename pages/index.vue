@@ -14,7 +14,7 @@
                     GitHub
                 </a>
 
-                <a href="https://github.com/Marco3jp/i4Sketch/issues"
+                <a href="https://github.com/Marco3jp/i4Sketch/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc"
                    target="_blank"
                    class="button button--orange">
                     Issues
