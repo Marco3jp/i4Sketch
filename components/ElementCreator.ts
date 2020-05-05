@@ -106,165 +106,161 @@ export default Vue.component('ElementCreator', {
             }
 
             let childElements: Array<VNode> = [];
-            if (!this.element.contentModel.includes(CategoriesEnum.NOTHING)) {
-                if (this.element.childElements.length !== 0) {
-                    for (let i = 0; i < this.element.childElements.length; i++) {
-                        this.outerLeaveCounter.push(0);
-                        if (this.element.childElements[i] instanceof TextElement) {
-                            childElements.push(createElement("element-creator", {
-                                props: {
-                                    element: this.element.childElements[i],
-                                    indexOf: i,
-                                },
-                                key: this.element.childElements[i].uuid,
-                            }));
-
-                        } else {
-                            // insert outer top side drop area
-                            childElements.push(createElement("div", {
-                                ...optionsOuterDropAreaElement,
-                                on: {
-                                    drop: function (event: DragEvent) {
-                                        event.preventDefault();
-                                        self.$store.dispatch("structure/insertAdjustElement", {
-                                            position: 'beforebegin',
-                                            targetElementUuid: (self.element as NotTextElements).childElements[i].uuid,
-                                            newElement: createElementByTagName(self.$store.state.structure.holdingElementName),
-                                            indexOf: i
-                                        });
-                                        self.resetOuterDropArea();
-                                    },
-                                    dragleave: function () {
-                                        self.outerLeaveCounter[i]--;
-                                        if (self.outerLeaveCounter[i] === 0) {
-                                            self.resetOuterDropArea();
-                                        }
-                                    },
-                                    dragenter: function (event: DragEvent) {
-                                        self.outerLeaveCounter[i]++;
-                                        event.preventDefault();
-                                    },
-                                    dragover: function (event: DragEvent) {
-                                        event.preventDefault();
-                                    },
-                                },
-                                ref: `TopOuterDropArea${i}`
-                            }));
-                            childElements.push(createElement("element-creator", {
-                                props: {
-                                    element: this.element.childElements[i],
-                                    indexOf: i,
-                                },
-                                key: this.element.childElements[i].uuid,
-                                on: {
-                                    "bubbles-dragover": function (index: number) {
-                                        self.enterDragChildElementIndex = index;
-                                        if (typeof self.$store.state.structure.holdingElementCategories !== "undefined") {
-                                            self.isDroppableChildElement = (self.element as TElement).contentModel.every((category) => {
-                                                return (self.$store.state.structure.holdingElementCategories as Array<CategoriesEnum>).includes(category);
-                                            })
-                                            if (self.isDroppableChildElement) {
-                                                // @ts-ignore
-                                                self.$refs[`TopOuterDropArea${index}`].style.display = null;
-                                                // @ts-ignore
-                                                self.$refs[`BottomOuterDropArea${index}`].style.display = null;
-                                            }
-                                        }
-                                    },
-                                    "bubbles-dragenter": function (index: number) {
-                                        self.outerLeaveCounter[index]++;
-                                        self.innerLeaveCounter++;
-                                    },
-                                    "bubbles-dragleave": function (index: number) {
-                                        self.outerLeaveCounter[index]--;
-                                        self.innerLeaveCounter--;
+            for (let i = 0; i < this.element.childElements.length; i++) {
+                this.outerLeaveCounter.push(0);
+                if (this.element.childElements[i] instanceof TextElement) {
+                    childElements.push(createElement("element-creator", {
+                        props: {
+                            element: this.element.childElements[i],
+                            indexOf: i,
+                        },
+                        key: this.element.childElements[i].uuid,
+                    }));
+                } else {
+                    // insert outer top side drop area
+                    childElements.push(createElement("div", {
+                        ...optionsOuterDropAreaElement,
+                        on: {
+                            drop: function (event: DragEvent) {
+                                event.preventDefault();
+                                self.$store.dispatch("structure/insertAdjustElement", {
+                                    position: 'beforebegin',
+                                    targetElementUuid: (self.element as NotTextElements).childElements[i].uuid,
+                                    newElement: createElementByTagName(self.$store.state.structure.holdingElementName),
+                                    indexOf: i
+                                });
+                                self.resetOuterDropArea();
+                            },
+                            dragleave: function () {
+                                self.outerLeaveCounter[i]--;
+                                if (self.outerLeaveCounter[i] === 0) {
+                                    self.resetOuterDropArea();
+                                }
+                            },
+                            dragenter: function (event: DragEvent) {
+                                self.outerLeaveCounter[i]++;
+                                event.preventDefault();
+                            },
+                            dragover: function (event: DragEvent) {
+                                event.preventDefault();
+                            },
+                        },
+                        ref: `TopOuterDropArea${i}`
+                    }));
+                    childElements.push(createElement("element-creator", {
+                        props: {
+                            element: this.element.childElements[i],
+                            indexOf: i,
+                        },
+                        key: this.element.childElements[i].uuid,
+                        on: {
+                            "bubbles-dragover": function (index: number) {
+                                self.enterDragChildElementIndex = index;
+                                if (typeof self.$store.state.structure.holdingElementCategories !== "undefined") {
+                                    self.isDroppableChildElement = (self.element as TElement).contentModel.every((category) => {
+                                        return (self.$store.state.structure.holdingElementCategories as Array<CategoriesEnum>).includes(category);
+                                    })
+                                    if (self.isDroppableChildElement) {
+                                        // @ts-ignore
+                                        self.$refs[`TopOuterDropArea${index}`].style.display = null;
+                                        // @ts-ignore
+                                        self.$refs[`BottomOuterDropArea${index}`].style.display = null;
                                     }
                                 }
-                            }));
-                            // insert outer bottom side drop area
-                            childElements.push(createElement("div", {
-                                ...optionsOuterDropAreaElement,
-                                on: {
-                                    drop: function (event: DragEvent) {
-                                        event.preventDefault();
-                                        self.$store.dispatch("structure/insertAdjustElement", {
-                                            position: 'afterend',
-                                            targetElementUuid: (self.element as NotTextElements).childElements[i].uuid,
-                                            newElement: createElementByTagName(self.$store.state.structure.holdingElementName),
-                                            indexOf: i
-                                        })
-                                        self.resetOuterDropArea();
-                                    },
-                                    dragleave: function () {
-                                        self.outerLeaveCounter[i]--;
-                                        if (self.outerLeaveCounter[i] === 0) {
-                                            self.resetOuterDropArea();
-                                        }
-                                    },
-                                    dragenter: function (event: DragEvent) {
-                                        self.outerLeaveCounter[i]++;
-                                        event.preventDefault();
-                                    },
-                                    dragover: function (event: DragEvent) {
-                                        event.preventDefault();
-                                    },
-                                },
-                                ref: `BottomOuterDropArea${i}`
-                            }));
+                            },
+                            "bubbles-dragenter": function (index: number) {
+                                self.outerLeaveCounter[index]++;
+                                self.innerLeaveCounter++;
+                            },
+                            "bubbles-dragleave": function (index: number) {
+                                self.outerLeaveCounter[index]--;
+                                self.innerLeaveCounter--;
+                            }
                         }
-                    }
+                    }));
+                    // insert outer bottom side drop area
+                    childElements.push(createElement("div", {
+                        ...optionsOuterDropAreaElement,
+                        on: {
+                            drop: function (event: DragEvent) {
+                                event.preventDefault();
+                                self.$store.dispatch("structure/insertAdjustElement", {
+                                    position: 'afterend',
+                                    targetElementUuid: (self.element as NotTextElements).childElements[i].uuid,
+                                    newElement: createElementByTagName(self.$store.state.structure.holdingElementName),
+                                    indexOf: i
+                                })
+                                self.resetOuterDropArea();
+                            },
+                            dragleave: function () {
+                                self.outerLeaveCounter[i]--;
+                                if (self.outerLeaveCounter[i] === 0) {
+                                    self.resetOuterDropArea();
+                                }
+                            },
+                            dragenter: function (event: DragEvent) {
+                                self.outerLeaveCounter[i]++;
+                                event.preventDefault();
+                            },
+                            dragover: function (event: DragEvent) {
+                                event.preventDefault();
+                            },
+                        },
+                        ref: `BottomOuterDropArea${i}`
+                    }));
                 }
-
-                let optionsInnerDropAreaElement: VNodeData = {
-                    style: {
-                        display: self.isEnterDrag && self.isDroppable ? null : "none",
-                    },
-                    class: {
-                        "inner-new-element-drop-area": true,
-                        "new-element-drop-area-block":
-                            getElementDisplayOutside((self.element as NotTextElements).tagName) !== DisplayOutsideEnum.INLINE ||
-                            self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.BLOCK,
-                        "new-element-drop-area-inline":
-                            getElementDisplayOutside((self.element as NotTextElements).tagName) === DisplayOutsideEnum.INLINE ||
-                            self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.INLINE,
-                        // "new-element-drop-area-run-in": self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.RUNIN,
-                    },
-                };
-
-                // insert inner top side drop area
-                childElements.unshift(createElement("div", {
-                    on: {
-                        drop: function (event: DragEvent) {
-                            event.preventDefault();
-                            self.$store.dispatch("structure/insertAdjustElement", {
-                                position: 'afterbegin',
-                                targetElementUuid: self.element.uuid,
-                                newElement: createElementByTagName(self.$store.state.structure.holdingElementName),
-                            })
-                            self.resetInnerDropArea();
-                        },
-                        ...eventListenerDroppableElement
-                    },
-                    ...optionsInnerDropAreaElement,
-                }))
-
-                // insert inner bottom side drop area
-                childElements.push(createElement("div", {
-                    on: {
-                        drop: function (event: DragEvent) {
-                            event.preventDefault();
-                            self.$store.dispatch("structure/insertAdjustElement", {
-                                position: 'beforeend',
-                                targetElementUuid: self.element.uuid,
-                                newElement: createElementByTagName(self.$store.state.structure.holdingElementName),
-                            })
-                            self.resetInnerDropArea();
-                        },
-                        ...eventListenerDroppableElement
-                    },
-                    ...optionsInnerDropAreaElement,
-                }))
             }
+
+            let optionsInnerDropAreaElement: VNodeData = {
+                style: {
+                    display: self.isEnterDrag && self.isDroppable ? null : "none",
+                },
+                class: {
+                    "inner-new-element-drop-area": true,
+                    "new-element-drop-area-block":
+                        getElementDisplayOutside((self.element as NotTextElements).tagName) !== DisplayOutsideEnum.INLINE ||
+                        self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.BLOCK,
+                    "new-element-drop-area-inline":
+                        getElementDisplayOutside((self.element as NotTextElements).tagName) === DisplayOutsideEnum.INLINE ||
+                        self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.INLINE,
+                    // "new-element-drop-area-run-in": self.$store.state.structure.holdingElementDisplayOuteside === DisplayOutsideEnum.RUNIN,
+                },
+            };
+
+            // insert inner top side drop area
+            childElements.unshift(createElement("div", {
+                on: {
+                    drop: function (event: DragEvent) {
+                        event.preventDefault();
+                        self.$store.dispatch("structure/insertAdjustElement", {
+                            position: 'afterbegin',
+                            targetElementUuid: self.element.uuid,
+                            newElement: createElementByTagName(self.$store.state.structure.holdingElementName),
+                        })
+                        self.resetInnerDropArea();
+                    },
+                    ...eventListenerDroppableElement
+                },
+                ...optionsInnerDropAreaElement,
+            }))
+
+            // insert inner bottom side drop area
+            childElements.push(createElement("div", {
+                on: {
+                    drop: function (event: DragEvent) {
+                        event.preventDefault();
+                        self.$store.dispatch("structure/insertAdjustElement", {
+                            position: 'beforeend',
+                            targetElementUuid: self.element.uuid,
+                            newElement: createElementByTagName(self.$store.state.structure.holdingElementName),
+                        })
+                        self.resetInnerDropArea();
+                    },
+                    ...eventListenerDroppableElement
+                },
+                ...optionsInnerDropAreaElement,
+            }))
+
 
             let optionsNewElement: VNodeData = {
                 on: {
