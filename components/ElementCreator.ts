@@ -53,6 +53,7 @@ export default Vue.component('ElementCreator', {
             isDroppable: false,
             enterDragChildElementIndex: undefined as number | undefined,
             isDroppableChildElement: false,
+            leaveCounter: 0
         }
     },
     methods: {
@@ -145,7 +146,7 @@ export default Vue.component('ElementCreator', {
                                 },
                                 key: this.element.childElements[i].uuid,
                                 on: {
-                                    "reverse-bubbles-dragover": function (index: number) {
+                                    "bubbles-dragover": function (index: number) {
                                         self.enterDragChildElementIndex = index;
                                         if (typeof self.$store.state.structure.holdingElementCategories !== "undefined") {
                                             self.isDroppableChildElement = (self.element as TElement).contentModel.every((category) => {
@@ -159,6 +160,12 @@ export default Vue.component('ElementCreator', {
                                             }
                                         }
                                     },
+                                    "bubbles-dragenter": function () {
+                                        self.leaveCounter++;
+                                    },
+                                    "bubbles-dragleave": function () {
+                                        self.leaveCounter--;
+                                    }
                                 }
                             }));
                             // insert outer bottom side drop area
@@ -246,11 +253,21 @@ export default Vue.component('ElementCreator', {
                                 return (self.$store.state.structure.holdingElementCategories as Array<CategoriesEnum>).includes(category);
                             })
                         }
-                        self.$emit("reverse-bubbles-dragover", self.indexOf);
+                        self.$emit("bubbles-dragover", self.indexOf);
                     },
-                    dragleave: function () {
-                        self.resetInnerDropArea();
+                    dragleave: function (event: DragEvent) {
+                        self.leaveCounter--;
+                        self.$emit("bubbles-dragleave");
+                        event.stopPropagation();
+                        if (self.leaveCounter === 0) {
+                            self.resetInnerDropArea();
+                        }
                     },
+                    dragenter: function (event: DragEvent) {
+                        self.leaveCounter++;
+                        self.$emit("bubbles-dragenter");
+                        event.stopPropagation();
+                    }
                 },
             }
 
