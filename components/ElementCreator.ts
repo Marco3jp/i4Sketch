@@ -71,6 +71,13 @@ export default Vue.component('ElementCreator', {
             this.isDroppable = false;
         },
     },
+    mounted(): void {
+        if (!(this.element instanceof TextElement)) {
+            for (let i = 0; i < (this.element as NotTextElements).childElements.length; i++) {
+                this.outerLeaveCounter.push(0);
+            }
+        }
+    },
     render: function (createElement): VNode {
         let self = this;
         if (this.element instanceof TextElement) {
@@ -107,7 +114,6 @@ export default Vue.component('ElementCreator', {
 
             let childElements: Array<VNode> = [];
             for (let i = 0; i < this.element.childElements.length; i++) {
-                this.outerLeaveCounter.push(0);
                 if (this.element.childElements[i] instanceof TextElement) {
                     childElements.push(createElement("element-creator", {
                         props: {
