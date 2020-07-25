@@ -11,7 +11,6 @@
     import TheLeftSidebar from "~/components/TheLeftSidebar.vue";
     import TheSketchbook from "~/components/TheSketchbook.vue";
     import TheRightSidebar from "~/components/TheRightSidebar.vue";
-    import {insertSampleTree} from "~/src/insertSampleTree";
 
     export default Vue.extend({
         name: "editor",
@@ -19,9 +18,6 @@
             TheLeftSidebar,
             TheSketchbook,
             TheRightSidebar
-        },
-        mounted(): void {
-            insertSampleTree(this.$store);
         }
     });
 </script>
