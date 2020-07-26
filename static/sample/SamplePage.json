@@ -18,8 +18,8 @@
                 "y": 12
             },
             "size": {
-                "width": 120,
-                "height": 24
+                "width": 400,
+                "height": 48
             },
             "color": {
                 "font": "#000"
@@ -30,11 +30,11 @@
             "type": "rect",
             "position": {
                 "x": 64,
-                "y": 60
+                "y": 80
             },
             "size": {
-                "width": 120,
-                "height": 60
+                "width": 800,
+                "height": 120
             },
             "color": {
                 "background": "#666"
@@ -45,8 +45,8 @@
             "type": "text",
             "content": "画像",
             "position": {
-                "x": 114,
-                "y": 81
+                "x": 400,
+                "y": 130
             },
             "size": {
                 "width": 36,
@@ -59,20 +59,20 @@
             "content": "記事の見出し",
             "position": {
                 "x": 24,
-                "y": 140
+                "y": 220
             },
             "size": {
-                "width": 102,
-                "height": 18
+                "width": 200,
+                "height": 36
             }
         },
         {
             "name": "記事の本文",
             "type": "text",
-            "content": "ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。ここに本文が入る。",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. からだはドアのせいせいたばこ汁に底でち先生たなく。またどんどん正確ましだという音ますない。ばかだたものたはないいや一心の生意気どものうちをもまるでばかななと、何まで狸が飛びれんたた。出すぎきみは意地悪からなくたて半分のぶんのゴーシュらをあり第一うそ汁のあんばいがわからてくださらですでし。血はいましばくださいた。声は一出しゴーシュのようへへんじでしまっまし。子は気分子とみんなを云って来でし。いちども矢をすこしにして野鼠が楽屋のようがたってセロに砕けが時々糸をわらいてしまいます。ふらふらちゃんと下へはんをしましまし。そっちなかなかにゴーシュを出して舞台へふるえだまし。水車があいますます。「ふくにきれござい。さま、何を仲間。思い。」",
             "position": {
                 "x": 24,
-                "y": 170
+                "y": 280
             },
             "size": {
                 "width": 800,
