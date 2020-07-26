@@ -11,7 +11,8 @@ export interface I4Element {
 
     appendChild(element: I4Element | I4TextElement): I4Element | I4TextElement
 
-    insertElement(element: I4Element | I4TextElement, position: InsertPosition): I4Element | I4TextElement
+    //element insert before childElements[index], so if arg index is 0, inserted element index is 0.
+    insertElement(element: I4Element | I4TextElement, index: number): I4Element | I4TextElement
 
     removeChild(element: I4Element | I4TextElement): void
 
