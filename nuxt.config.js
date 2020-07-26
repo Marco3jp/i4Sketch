@@ -33,7 +33,9 @@ export default {
     /*
     ** Plugins to load before mounting the App
     */
-    plugins: [],
+    plugins: [
+        {src: '@/plugins/tree.ts'}
+    ],
     /*
     ** Nuxt.js dev-modules
     */
