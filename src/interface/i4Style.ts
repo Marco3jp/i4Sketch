@@ -2,30 +2,24 @@ export interface I4Style {
     position: "absolute" | "relative"
 
     // if position relative, be undefined
-    x: number | null
-    y: number | null
+    top?: string
+    left?: string
 
-    height: number
-    width: number
+    height?: string
+    width?: string
 
-    margin: {
-        top: number
-        right: number
-        bottom: number
-        left: number
-    }
+    marginTop?: string
+    marginRight?: string
+    marginBottom?: string
+    marginLeft?: string
 
-    padding: {
-        top: number
-        right: number
-        bottom: number
-        left: number
-    }
+    paddingTop?: string
+    paddingRight?: string
+    paddingBottom?: string
+    paddingLeft?: string
 
-    color: {
-        font: string
-        background: string
-    }
+    color?: string
+    backgroundColor?: string
 
-    fontSize: number
+    fontSize?: string
 }
