@@ -9,8 +9,8 @@ interface i4Tree {
 }
 
 const TreePlugin: Plugin = (context, inject) => {
-    const relativeRoot = new i4Element("div", {position: "relative"}, "root");
-    const absoluteRoot = new i4Element("div", {position: "relative"}, "root");
+    const relativeRoot = new i4Element("div", {position: "relative"}, "relativeRoot");
+    const absoluteRoot = new i4Element("div", {position: "relative"}, "absoluteRoot");
 
     const state = Vue.observable<i4Tree>({
         relative: relativeRoot,
