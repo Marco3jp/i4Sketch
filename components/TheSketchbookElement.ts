@@ -25,7 +25,8 @@ export default Vue.component('TheSketchbookElement', {
                         style: {
                             border: "1px solid black",
                             ...this.element.style
-                        }
+                        },
+                        key: this.element.uuid
                     }
                 );
             } else {
@@ -35,7 +36,8 @@ export default Vue.component('TheSketchbookElement', {
                         props: {
                             element: this.element.childElements[i],
                             indexOf: i,
-                        }
+                        },
+                        key: this.element.childElements[i].uuid
                     }));
                 }
                 return createElement(this.element.cssTagName,
@@ -43,7 +45,8 @@ export default Vue.component('TheSketchbookElement', {
                         style: {
                             border: "1px solid black",
                             ...this.element.style
-                        }
+                        },
+                        key: this.element.uuid
                     }
                     , childElements)
             }
