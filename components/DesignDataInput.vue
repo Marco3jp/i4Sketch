@@ -32,25 +32,19 @@
                 for (let i = 0; i < designData.parts.length; i++) {
                     console.log(designData.parts[i]);
                     let element: i4Element;
+                    element = new i4Element("div", {
+                        position: "absolute",
+                        width: designData.parts[i].size.width + 'px',
+                        height: designData.parts[i].size.height + 'px',
+                        top: designData.parts[i].position.y + 'px',
+                        left: designData.parts[i].position.x + 'px',
+                    }, designData.parts[i].name);
+
                     if (designData.parts[i].type === "text") {
-                        element = new i4Element("div", {
-                            position: "absolute",
-                            width: designData.parts[i].size.width + 'px',
-                            height: designData.parts[i].size.height + 'px',
-                            top: designData.parts[i].position.y + 'px',
-                            left: designData.parts[i].position.x + 'px',
-                            color: (designData.parts[i] as TextPart)?.color?.font
-                        });
+                        element.style.color = (designData.parts[i] as TextPart)?.color?.font;
                         element.appendChild(new i4TextElement(designData.parts[i].content));
                     } else {
-                        element = new i4Element("div", {
-                            position: "absolute",
-                            width: designData.parts[i].size.width + 'px',
-                            height: designData.parts[i].size.height + 'px',
-                            top: designData.parts[i].position.y + 'px',
-                            left: designData.parts[i].position.x + 'px',
-                            backgroundColor: (designData.parts[i] as RectPart)?.color?.background
-                        });
+                        element.style.backgroundColor = (designData.parts[i] as RectPart)?.color?.background;
                     }
                     this.$tree.absolute.appendChild(element);
                 }
