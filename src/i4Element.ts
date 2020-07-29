@@ -15,7 +15,7 @@ export class i4Element implements I4Element {
     constructor(tagName: "div" | "span", style: i4Style, name?: string) {
         this.childElements = [];
         this.cssTagName = tagName;
-        this.name = "";
+        this.name = name ?? "";
         this.parentElement = null;
         this.uuid = uuidv4();
         this.style = new i4Style(style);
