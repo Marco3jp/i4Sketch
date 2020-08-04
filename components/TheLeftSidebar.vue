@@ -1,13 +1,17 @@
 <template>
     <div class="left-sidebar">
-        <h2>relative tree</h2>
-        <ul>
-            <the-left-sidebar-item :element="relativeTree"></the-left-sidebar-item>
-        </ul>
-        <h2>absolute tree</h2>
-        <ul>
-            <the-left-sidebar-item :element="absoluteTree"></the-left-sidebar-item>
-        </ul>
+        <div class="tree-wrapper">
+            <h2>relative tree</h2>
+            <ul>
+                <the-left-sidebar-item :element="relativeTree"></the-left-sidebar-item>
+            </ul>
+        </div>
+        <div class="tree-wrapper">
+            <h2>absolute tree</h2>
+            <ul>
+                <the-left-sidebar-item :element="absoluteTree"></the-left-sidebar-item>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -32,7 +36,23 @@
 <style scoped lang="scss">
     .left-sidebar {
         height: 100%;
-        width: 240px;
+        width: 280px;
         border-right: 2px solid gray;
+        display: flex;
+        flex-direction: column;
+        .tree-wrapper{
+            overflow: auto;
+            flex: 1;
+
+            &:first-of-type{
+                border-bottom: 1px solid black;
+            }
+
+            ul {
+                list-style: none;
+                padding-left: 1rem;
+            }
+        }
+
     }
 </style>
