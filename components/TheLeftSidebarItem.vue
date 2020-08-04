@@ -1,6 +1,6 @@
 <template>
-    <li v-if="isElement">
-        {{element.name}}
+    <li v-if="isElement" draggable="true">
+        <span class="tree-item">{{element.name}}</span>
         <ul v-if="hasChildElement">
             <the-left-sidebar-item v-for="childElement in childElements" :element="childElement" :key="childElement.uuid"></the-left-sidebar-item>
         </ul>
@@ -33,6 +33,16 @@
     })
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+    .tree-item{
+        cursor: pointer;
+        user-select: none;
+        &:hover{
+            background: silver;
+        }
+    }
+ul {
+    list-style: none;
+    padding-left: 1rem;
+}
 </style>
