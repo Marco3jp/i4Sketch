@@ -69,7 +69,7 @@
             },
             "size": {
                 "width": 800,
-                "height": 400
+                "height": 90
             }
         },
         {
@@ -79,8 +79,8 @@
             "content": "画像",
             "position": {
                 "x": 24,
-                "y": 680,
-                "@comment": "y = 660 + 20"
+                "y": 370,
+                "@comment": "y = 350 + 20"
             },
             "size": {
                 "width": 600,
