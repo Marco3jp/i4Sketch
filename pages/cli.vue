@@ -1,6 +1,6 @@
 <template>
     <div class="cli">
-        <h1>DesignData + StructureData = HTML/CSS</h1>
+        <h1>{ html, css } = generateCode(design, structure);</h1>
         <h2>データ入力</h2>
         <div class="cli__input">
             <div class="cli__input-design">

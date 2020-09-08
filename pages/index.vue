@@ -24,6 +24,11 @@
                     Go to Sketchbook!
                 </nuxt-link>
             </div>
+            <div class="links">
+                <nuxt-link to="/cli" class="button button--grey">
+                    { html, css } = generateCode(design, structure);
+                </nuxt-link>
+            </div>
         </div>
     </div>
 </template>
