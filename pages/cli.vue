@@ -178,7 +178,7 @@
                 generatingHTML += "<body>"
                 this.parsedData.design.parts.forEach(part => {
                     if (part.type === 'text') {
-                        generatingHTML += `<span id="gen${part.id}">${part.content}</span>`
+                        generatingHTML += `<p id="gen${part.id}">${part.content}</p>`
                     } else {
                         generatingHTML += `<div id="gen${part.id}"></div>`
                     }
@@ -209,7 +209,7 @@
                         const elm = this.findPart(part.id)
                         if (typeof elm === "undefined") throw new Error("undefined id")
                         if (elm.type === 'text') {
-                            code += `<span id="gen${elm.id}">${elm.content}</span>`
+                            code += `<p id="gen${elm.id}">${elm.content}</p>`
                         } else {
                             code += `<div id="gen${elm.id}">`
                             if (typeof part.childElements !== "undefined" && part.childElements.length > 0) {
