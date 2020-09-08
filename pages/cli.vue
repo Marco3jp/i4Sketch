@@ -264,6 +264,10 @@
             & > div {
                 width: 50%;
 
+                &:not(:last-of-type) {
+                    margin-bottom: 16px;
+                }
+
                 &.cli__code-preview-HTML {
                     width: 75%;
                 }
