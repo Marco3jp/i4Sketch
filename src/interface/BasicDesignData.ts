@@ -1,4 +1,5 @@
 interface BasePart {
+    "id": string
     "name": string
     "content": string
     "position": {
@@ -8,24 +9,23 @@ interface BasePart {
     "size": {
         "width": number
         "height": number
-    }
+    },
+    "decoration": object
 }
 
 export interface TextPart extends BasePart {
     "type": "text"
-    "color": {
-        "font"?: string
+    "decoration": {
+        "fontColor"?: string
     }
 }
 
 export interface RectPart extends BasePart {
     "type": "rect"
-    "color": {
-        "background"?: string
+    "decoration": {
+        "backgroundColor"?: string
     }
 }
-
-export type Part = TextPart | RectPart
 
 export interface BasicDesignData {
     "meta": {
@@ -34,8 +34,7 @@ export interface BasicDesignData {
                 "width": number
                 "height": number
             },
-            "baseColor": string
         }
     },
-    "parts": Array<Part>
+    "parts": Array<TextPart | RectPart>
 }
