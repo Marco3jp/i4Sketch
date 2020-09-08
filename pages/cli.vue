@@ -165,11 +165,13 @@
                 }
             },
             generateElementCSS(part: TextPart | RectPart): string {
+                let code = `#gen${part.id} { position: absolute; height: ${part.size.height}px; width: ${part.size.width}px; top: ${part.position.y}px; left: ${part.position.x}px; border: 1px solid rgba(0, 0, 0, .25);`
                 if (part.type === 'text') {
-                    return `#gen${part.id} { position: absolute; top: ${part.position.y}px; left: ${part.position.x}px; color: ${part.decoration?.fontColor ?? 'inherit'} }`
+                    code += `color: ${part.decoration?.fontColor ?? 'inherit'};}`
                 } else {
-                    return `#gen${part.id} { position: absolute; height: ${part.size.height}px; width: ${part.size.width}px; top: ${part.position.y}px; left: ${part.position.x}px; color: ${part.decoration?.backgroundColor ?? 'transparent'}; border: 1px solid black; }`
+                    code += `background-color: ${part.decoration?.backgroundColor ?? 'transparent'};}`
                 }
+                return code
             },
             generateFlatCode() {
                 let generatingHTML = this.prefix + this.head;
