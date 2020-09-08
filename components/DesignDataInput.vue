@@ -41,10 +41,10 @@
                     }, designData.parts[i].name);
 
                     if (designData.parts[i].type === "text") {
-                        element.style.color = (designData.parts[i] as TextPart)?.color?.font;
+                        element.style.color = (designData.parts[i] as TextPart)?.decoration?.fontColor;
                         element.appendChild(new i4TextElement(designData.parts[i].content));
                     } else {
-                        element.style.backgroundColor = (designData.parts[i] as RectPart)?.color?.background;
+                        element.style.backgroundColor = (designData.parts[i] as RectPart)?.decoration?.backgroundColor;
                     }
                     this.$tree.absolute.appendChild(element);
                 }
