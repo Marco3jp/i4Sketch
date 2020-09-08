@@ -68,7 +68,7 @@ export let sampleDesign: BasicDesignData = {
             },
             size: {
                 width: 800,
-                height: 400
+                height: 90
             }
         },
         {
@@ -78,7 +78,7 @@ export let sampleDesign: BasicDesignData = {
             content: '画像',
             position: {
                 x: 24,
-                y: 680,
+                y: 370,
             },
             size: {
                 width: 600,
