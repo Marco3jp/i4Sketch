@@ -234,7 +234,7 @@
                     plugins: [htmlparser],
                 });
 
-                this.css += ".gen--wrapper { border: 1px solid black; }"
+                // this.css += ".gen--wrapper { border: 1px solid black; };
                 this.isDisplayStructure = true;
             },
             generateCode() {
