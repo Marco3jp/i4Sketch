@@ -6,10 +6,8 @@
     import Vue from 'vue';
     import prettier from "prettier/standalone";
     import htmlparser from "prettier/parser-html"
-    import {AllElements, NotTextElements} from "~/src/TypeAlias";
-    import {TextElement} from "~/src/TextElement";
-    import {TAnchorElement} from "~/src/TAnchorElement";
-    import {TImageElement} from "~/src/TImageElement";
+    import {I4Element} from "~/src/interface/i4Element";
+    import {I4TextElement} from "~/src/interface/i4TextElement";
 
     export default Vue.extend({
         name: "",
@@ -35,8 +33,9 @@
                 this.$store.commit("export/setExportedCode", exportString.trim());
                 this.$store.commit("view/showExportSourceCodeView");
             },
-            getTreeSourceString(tree: Array<AllElements>, sourceString = ""): string {
+            getTreeSourceString(tree: Array<I4Element | I4TextElement>, sourceString = ""): string {
                 tree.forEach(element => {
+                    /*
                     if (element instanceof TextElement) {
                         sourceString += element.value;
                         return sourceString;
@@ -64,6 +63,7 @@
                             sourceString += `</${element.tagName}>`;
                         }
                     }
+                     */
                 });
                 return sourceString;
             },

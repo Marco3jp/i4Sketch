@@ -2,8 +2,7 @@
     <div class="sketchbook">
         <the-sketchbook-toolbar></the-sketchbook-toolbar>
         <div class="sketchbook-canvas" v-if="!isShowCodeView">
-            <the-sketchbook-window-item v-for="(window, index) in windowsData" :key="index"
-                                        :window-data="window"></the-sketchbook-window-item>
+            <the-sketchbook-element :element="absoluteTree" :indexOf="0"></the-sketchbook-element>
         </div>
         <div class="sketchbook-codeview" v-else>
             <button @click="closeCodeView">close</button>
@@ -14,21 +13,24 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import TheSketchbookWindowItem from "~/components/TheSketchbookWindowItem.vue";
     import TheSketchbookToolbar from "~/components/TheSketchbookToolbar.vue";
+    import TheSketchbookElement from "~/components/TheSketchbookElement";
 
     export default Vue.extend({
         name: "TheSketchbook",
-        components: {TheSketchbookWindowItem, TheSketchbookToolbar},
+        components: {TheSketchbookToolbar, TheSketchbookElement},
         computed: {
-            windowsData: function () {
-                return this.$store.state.structure.windows;
-            },
             isShowCodeView: function () {
                 return this.$store.state.view.isShowSourceCode;
             },
             exportedCode: function () {
                 return this.$store.state.export.exportedCode;
+            },
+            relativeTree: function () {
+                return this.$tree.relative;
+            },
+            absoluteTree: function () {
+                return this.$tree.absolute;
             }
         },
         methods: {
