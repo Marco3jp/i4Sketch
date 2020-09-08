@@ -270,6 +270,7 @@
 
                 &.cli__code-preview-CSS {
                     width: 25%;
+                    font-size: 0.8rem;
                 }
             }
         }
