@@ -1,7 +1,7 @@
 interface BasePart {
     "id": string
     "name": string
-    "content": string
+    "content"?: string
     "position": {
         "x": number
         "y": number
@@ -10,19 +10,19 @@ interface BasePart {
         "width": number
         "height": number
     },
-    "decoration": object
+    "decoration"?: object
 }
 
 export interface TextPart extends BasePart {
     "type": "text"
-    "decoration": {
+    "decoration"?: {
         "fontColor"?: string
     }
 }
 
 export interface RectPart extends BasePart {
     "type": "rect"
-    "decoration": {
+    "decoration"?: {
         "backgroundColor"?: string
     }
 }
