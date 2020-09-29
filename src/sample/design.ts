@@ -1,14 +1,6 @@
 import {BasicDesignData} from "~/src/interface/BasicDesignData";
 
 export let sampleDesign: BasicDesignData = {
-    meta: {
-        canvas: {
-            size: {
-                width: 1920,
-                height: 1080
-            }
-        }
-    },
     parts: [
         {
             id: '1',

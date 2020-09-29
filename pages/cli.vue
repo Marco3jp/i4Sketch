@@ -11,37 +11,29 @@
                 <button type="button" @click="onInsertDesign" :disabled="isInsertedSampleDesign">Insert Sample Design
                 </button>
             </div>
-            <div class="cli_input-structure">
-                <label v-if="!isInsertedSampleStructure">
+            <!--div class="cli_input-structure">
+                <label v-if="!isInsertedSampleStructure">S
                     Structure:
                     <input type="file" accept="application/json" @change="onInputStructure">
                 </label>
                 <button type="button" @click="onInsertStructure" :disabled="isInsertedSampleStructure">Insert Sample
                     Structure
                 </button>
-            </div>
+            </div-->
         </div>
         <h2>データプレビュー</h2>
         <div class="cli__data-preview">
             <div class="cli__data-preview-design">
                 <div v-for="part in parsedData.design.parts">
-                    <div>
-                        <span>{{part.id}} - {{part.name}} ({{part.type}}) </span>
-                    </div>
+                    <structure-preview-li :part="part" :key="part.uuid"></structure-preview-li>
                 </div>
-            </div>
-            <div class="cli__data-preview-structure">
-                <ul v-for="(part, index) in parsedData.structure" :key="index">
-                    <structure-preview-li :part="part"></structure-preview-li>
-                </ul>
-
             </div>
         </div>
         <h2>ソースコードプレビュー</h2>
         <div>
             <button type="button" v-if="canStructure" @click="onToggleCode">ToggleStructure</button>
         </div>
-        <div class="cli__code-preview ">
+        <!--div class="cli__code-preview ">
             <div class="cli__code-preview-HTML">
                 <h3 v-if="html !== ''" v-show="!isDisplayStructure">デザインデータのみで生成したHTML</h3>
                 <h3 v-show="isDisplayStructure">デザインデータと構造データを組合せて出力したHTML</h3>
@@ -50,12 +42,13 @@
             <div class="cli__code-preview-CSS">
                 <pre>{{css}}</pre>
             </div>
-        </div>
+        </div-->
     </div>
 </template>
 
 <script lang="ts">
     import Vue from 'vue';
+    import {v4 as uuidv4} from 'uuid';
     import {BasicDesignData, RectPart, TextPart} from "~/src/interface/BasicDesignData";
     import {StructureData} from "~/src/interface/StructureData";
     import StructurePreviewLi from "~/components/StructurePreviewLi.vue";
@@ -87,15 +80,7 @@
             return {
                 parsedData: {
                     design: {
-                        "meta": {
-                            "canvas": {
-                                "size": {
-                                    "width": 1920,
-                                    "height": 1080
-                                },
-                            }
-                        },
-                        "parts": []
+                        parts: []
                     },
                     structure: []
                 },
@@ -115,6 +100,10 @@
                 fileReader.onload = () => {
                     if (typeof fileReader.result !== "undefined" && fileReader.result !== null && !(fileReader.result instanceof ArrayBuffer)) {
                         this.parsedData.design = JSON.parse(fileReader.result);
+                        this.parsedData.design.parts.forEach(part => {
+                            part.uuid = uuidv4();
+                        })
+                        this.isInsertedSampleDesign = true
                         this.generateCode()
                     } else {
                         throw new Error("inputted useless file");
@@ -129,6 +118,9 @@
             },
             onInsertDesign() {
                 this.parsedData.design = sampleDesign
+                this.parsedData.design.parts.forEach(part => {
+                    part.uuid = uuidv4();
+                })
                 this.isInsertedSampleDesign = true
                 this.generateCode()
             },
