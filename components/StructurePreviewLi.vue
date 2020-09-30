@@ -1,5 +1,5 @@
 <template>
-    <li draggable="true">
+    <li>
         <span v-if="typeof part.id !== 'undefined'">{{part.name}} ({{part.type}})</span>
         <span v-else>wrapper element</span>
         <ul v-if="typeof part.childElements !== 'undefined'">
