@@ -4,11 +4,11 @@
         <h2>データ入力</h2>
         <div class="cli__input">
             <div class="cli__input-design">
-                <label v-if="!isInsertedSampleDesign">
+                <label>
                     Design:
                     <input type="file" accept="application/json" @change="onInputDesign">
                 </label>
-                <button type="button" @click="onInsertDesign" :disabled="isInsertedSampleDesign">Insert Sample Design
+                <button type="button" @click="onInsertDesign" :disabled="isInsertedSampleData">Insert Sample Design
                 </button>
             </div>
             <!--div class="cli_input-structure">
@@ -24,25 +24,24 @@
         <h2>データプレビュー</h2>
         <div class="cli__data-preview">
             <div class="cli__data-preview-design">
-                <div v-for="part in parsedData.design.parts">
-                    <structure-preview-li :part="part" :key="part.uuid"></structure-preview-li>
+                <div v-for="part in structure.parts">
+                    <template>
+                        <div></div>
+                        <structure-preview-li :part="part" :key="part.uuid" draggable="true"></structure-preview-li>
+                        <div></div>
+                    </template>
                 </div>
             </div>
         </div>
         <h2>ソースコードプレビュー</h2>
-        <div>
-            <button type="button" v-if="canStructure" @click="onToggleCode">ToggleStructure</button>
-        </div>
-        <!--div class="cli__code-preview ">
+        <div class="cli__code-preview ">
             <div class="cli__code-preview-HTML">
-                <h3 v-if="html !== ''" v-show="!isDisplayStructure">デザインデータのみで生成したHTML</h3>
-                <h3 v-show="isDisplayStructure">デザインデータと構造データを組合せて出力したHTML</h3>
                 <pre>{{html}}</pre>
             </div>
             <div class="cli__code-preview-CSS">
                 <pre>{{css}}</pre>
             </div>
-        </div-->
+        </div>
     </div>
 </template>
 
@@ -50,27 +49,19 @@
     import Vue from 'vue';
     import {v4 as uuidv4} from 'uuid';
     import {BasicDesignData, RectPart, TextPart} from "~/src/interface/BasicDesignData";
-    import {StructureData} from "~/src/interface/StructureData";
     import StructurePreviewLi from "~/components/StructurePreviewLi.vue";
     import prettier from "prettier/standalone";
     import htmlparser from "prettier/parser-html";
     import cssparser from "prettier/parser-postcss"
     import {sampleDesign} from "~/src/sample/design"
-    import {sampleStructure} from "~/src/sample/structure";
 
     interface cliData {
-        parsedData: {
-            design: BasicDesignData,
-            structure: StructureData
-        },
+        structure: BasicDesignData,
         prefix: string,
         head: string,
         html: string,
         css: string,
-        canStructure: boolean,
-        isDisplayStructure: boolean,
-        isInsertedSampleDesign: boolean,
-        isInsertedSampleStructure: boolean,
+        isInsertedSampleData: boolean,
     }
 
     export default Vue.extend({
@@ -78,20 +69,12 @@
         components: {StructurePreviewLi},
         data(): cliData {
             return {
-                parsedData: {
-                    design: {
-                        parts: []
-                    },
-                    structure: []
-                },
+                structure: {} as BasicDesignData,
                 prefix: '<!DOCTYPE html><html lang="ja">',
                 head: '<head><meta charset=\"UTF-8\"><title>Test Title</title></head>',
                 html: '',
                 css: '',
-                canStructure: false,
-                isDisplayStructure: false,
-                isInsertedSampleDesign: false,
-                isInsertedSampleStructure: false
+                isInsertedSampleData: false
             }
         },
         methods: {
@@ -99,11 +82,11 @@
                 const fileReader = new FileReader();
                 fileReader.onload = () => {
                     if (typeof fileReader.result !== "undefined" && fileReader.result !== null && !(fileReader.result instanceof ArrayBuffer)) {
-                        this.parsedData.design = JSON.parse(fileReader.result);
-                        this.parsedData.design.parts.forEach(part => {
+                        this.structure = JSON.parse(fileReader.result);
+                        this.structure.parts.forEach(part => {
                             part.uuid = uuidv4();
                         })
-                        this.isInsertedSampleDesign = true
+                        this.isInsertedSampleData = true
                         this.generateCode()
                     } else {
                         throw new Error("inputted useless file");
@@ -117,44 +100,12 @@
                 }
             },
             onInsertDesign() {
-                this.parsedData.design = sampleDesign
-                this.parsedData.design.parts.forEach(part => {
+                this.structure = sampleDesign
+                this.structure.parts.forEach(part => {
                     part.uuid = uuidv4();
                 })
-                this.isInsertedSampleDesign = true
+                this.isInsertedSampleData = true
                 this.generateCode()
-            },
-            onInputStructure(event: Event) {
-                const fileReader = new FileReader();
-                fileReader.onload = () => {
-                    if (typeof fileReader.result !== "undefined" && fileReader.result !== null && !(fileReader.result instanceof ArrayBuffer)) {
-                        this.parsedData.structure = JSON.parse(fileReader.result);
-                        this.canStructure = true;
-                        this.generateCode()
-                    } else {
-                        throw new Error("inputted useless file");
-                    }
-                }
-
-                const elm = event.target as HTMLInputElement
-
-                if (elm.files !== null && typeof elm.files[0] !== "undefined") {
-                    fileReader.readAsText(elm.files[0]);
-                }
-            },
-            onInsertStructure() {
-                this.parsedData.structure = sampleStructure
-                this.isInsertedSampleStructure = true
-                this.canStructure = true;
-                this.generateCode()
-            },
-            onToggleCode() {
-                this.generateCSS();
-                if (this.isDisplayStructure) {
-                    this.generateFlatCode();
-                } else {
-                    this.generateStructureCode();
-                }
             },
             generateElementCSS(part: TextPart | RectPart): string {
                 let code = `#gen${part.id} { position: absolute; height: ${part.size.height}px; width: ${part.size.width}px; top: ${part.position.y}px; left: ${part.position.x}px; border: 1px solid rgba(0, 0, 0, .25);`
@@ -165,28 +116,9 @@
                 }
                 return code
             },
-            generateFlatCode() {
-                let generatingHTML = this.prefix + this.head;
-                generatingHTML += "<body>"
-                this.parsedData.design.parts.forEach(part => {
-                    if (part.type === 'text') {
-                        generatingHTML += `<p id="gen${part.id}">${part.content}</p>`
-                    } else {
-                        generatingHTML += `<div id="gen${part.id}"></div>`
-                    }
-                })
-                generatingHTML += "</body></html>"
-
-                this.html = prettier.format(generatingHTML, {
-                    parser: "html",
-                    plugins: [htmlparser],
-                });
-
-                this.isDisplayStructure = false;
-            },
             generateCSS() {
                 let generatingCSS = '';
-                this.parsedData.design.parts.forEach(part => {
+                this.structure.parts.forEach(part => {
                     generatingCSS += this.generateElementCSS(part)
                 })
                 this.css = prettier.format(generatingCSS, {
@@ -194,34 +126,24 @@
                     plugins: [cssparser],
                 });
             },
-            generateRecursive(parts: StructureData): string {
-                let code = "";
+            generateSourceString(parts: Array<TextPart | RectPart>, sourceString = ""): string {
                 parts.forEach(part => {
-                    if (typeof part.id !== 'undefined') {
-                        const elm = this.findPart(part.id)
-                        if (typeof elm === "undefined") throw new Error("undefined id")
-                        if (elm.type === 'text') {
-                            code += `<p id="gen${elm.id}">${elm.content}</p>`
-                        } else {
-                            code += `<div id="gen${elm.id}">`
-                            if (typeof part.childElements !== "undefined" && part.childElements.length > 0) {
-                                code += this.generateRecursive(part.childElements)
-                            }
-                            code += `</div>`
-                        }
-                    } else {
-                        code += `<div id="gen--wrapper">`
+                    if (part.type === "text") {
+                        sourceString += `<p id="gen${part.id}">${part.content}</p>`
+                        // return sourceString;
+                    } else if(part.type === "rect"){
+                        sourceString += `<div id="gen${part.id}">`
                         if (typeof part.childElements !== "undefined" && part.childElements.length > 0) {
-                            code += this.generateRecursive(part.childElements)
+                            sourceString += this.generateSourceString(part.childElements, sourceString)
                         }
-                        code += `</div>`
+                        sourceString += `</div>`
                     }
-                })
-                return code;
+                });
+                return sourceString;
             },
             generateStructureCode() {
                 let generatingHTML = this.prefix + this.head + "<body>";
-                generatingHTML += this.generateRecursive(this.parsedData.structure);
+                generatingHTML += this.generateSourceString(this.structure.parts);
                 generatingHTML += "</body></html>"
                 this.html = prettier.format(generatingHTML, {
                     parser: "html",
@@ -229,20 +151,15 @@
                 });
 
                 // this.css += ".gen--wrapper { border: 1px solid black; };
-                this.isDisplayStructure = true;
             },
             generateCode() {
-                if (this.parsedData.design.parts.length === 0) return ''
+                if (this.structure.parts.length === 0) return ''
                 this.generateCSS();
-                if (this.canStructure) {
-                    this.generateStructureCode();
-                } else {
-                    this.generateFlatCode();
-                }
+                this.generateStructureCode();
             },
-            findPart(id: string): TextPart | RectPart | undefined {
-                return this.parsedData.design.parts.find(part => {
-                    return part.id === id
+            findPart(uuid: string): TextPart | RectPart | undefined {
+                return this.structure.parts.find(part => {
+                    return part.uuid === uuid
                 })
             }
         },
