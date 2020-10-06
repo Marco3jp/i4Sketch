@@ -7,23 +7,21 @@ export type RootState = ReturnType<typeof state>
 
 export const state = () => ({
     isHoldingItem: false,
-    holdingItemUuid: '',
+    holdingItem: {},
+    holdingItemIndex: 0,
+    holdingItemParent: [] as Array<TextPart | RectPart>,
     tree: {} as BasicDesignData,
 });
 
 export const mutations: MutationTree<RootState> = {
-    catchItem(state, uuid: string) {
+    catchItem(state, {item, index, parent}) {
         state.isHoldingItem = true;
-        state.holdingItemUuid = uuid;
+        state.holdingItem = item;
+        state.holdingItemIndex = index;
+        state.holdingItemParent = parent;
     },
     throwItem(state) {
         state.isHoldingItem = false;
-        state.holdingItemUuid = '';
-    },
-    findPart(state, uuid: string): TextPart | RectPart | undefined {
-        return state.tree.parts.find(part => {
-            return part.uuid === uuid
-        })
     },
     insertDesign(state) {
         state.tree = sampleDesign
@@ -36,5 +34,16 @@ export const mutations: MutationTree<RootState> = {
         state.tree.parts.forEach(part => {
             part.uuid = uuidv4();
         })
+    },
+    moveItem(state, {target, targetIndex}) {
+        if (state.holdingItemParent) {
+            if (target.childElements?.length) {
+                target.childElements.splice(targetIndex, 0, state.holdingItem);
+            } else {
+                target.childElements = [state.holdingItem];
+            }
+
+            state.holdingItemParent.splice(state.holdingItemIndex, 1);
+        }
     }
 };

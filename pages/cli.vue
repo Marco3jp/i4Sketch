@@ -26,7 +26,8 @@
             <div class="cli__data-preview-design">
                 <drop-line></drop-line>
                 <structure-preview-item v-for="(part, index) in structure.parts" :part="part"
-                                        :key="part.uuid" :index="index"></structure-preview-item>
+                                        :key="part.uuid" :index="index"
+                                        :parent="structure.parts"></structure-preview-item>
             </div>
         </div>
         <h2>ソースコードプレビュー</h2>
@@ -43,7 +44,6 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {v4 as uuidv4} from 'uuid';
 import {BasicDesignData, RectPart, TextPart} from "~/src/interface/BasicDesignData";
 import StructurePreviewItem from "~/components/StructurePreviewItem.vue";
 import DropLine from '~/components/cli/DropLine.vue';
@@ -79,7 +79,7 @@ export default Vue.extend({
             return prettier.format(generatingHTML, {
                 parser: "html",
                 plugins: [htmlparser],
-            });
+            })
         },
         css: function (): string {
             if (this.structure?.parts === undefined || this.structure?.parts.length === 0) return ''
@@ -120,9 +120,17 @@ export default Vue.extend({
             } else {
                 code += `background-color: ${part.decoration?.backgroundColor ?? 'transparent'};}`
             }
+
+            if (part.type === "rect" && part.childElements?.length) {
+                part.childElements.forEach(element => {
+                    code += this.generateElementCSS(element);
+                })
+            }
+
             return code
         },
-        generateSourceString(parts: Array<TextPart | RectPart>, sourceString = ""): string {
+        generateSourceString(parts: Array<TextPart | RectPart>): string {
+            let sourceString = "";
             parts.forEach(part => {
                 if (part.type === "text") {
                     sourceString += `<p id="gen${part.id}">${part.content}</p>`
@@ -130,7 +138,7 @@ export default Vue.extend({
                 } else if (part.type === "rect") {
                     sourceString += `<div id="gen${part.id}">`
                     if (typeof part.childElements !== "undefined" && part.childElements.length > 0) {
-                        sourceString += this.generateSourceString(part.childElements, sourceString)
+                        sourceString += this.generateSourceString(part.childElements)
                     }
                     sourceString += `</div>`
                 }

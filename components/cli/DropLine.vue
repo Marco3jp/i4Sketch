@@ -1,6 +1,6 @@
 <template>
     <div class="drop-line" :class="{highlight: hoverItem}" @dragenter="onDragEnter"
-         @dragleave="onDragLeave" @drop="onDropItem" @dragover.prevent></div>
+         @dragleave="onDragLeave" @drop="$emit('drop')" @dragover.prevent></div>
 </template>
 
 <script lang="ts">
@@ -8,28 +8,16 @@ import Vue from 'vue';
 
 export default Vue.extend({
     name: "DropLine",
-    props: ['showForce', 'index'],
     data() {
         return {
             hoverItem: false
         }
     },
-    computed: {
-        isHoldingItem(): boolean {
-            return this.$store.state.structure.isHoldingItem
-        },
-    },
     methods: {
-        onDropItem() {
-            console.log(this.index);
-            this.hoverItem = false;
-        },
         onDragEnter() {
-            console.log("enter");
             this.hoverItem = true;
         },
         onDragLeave() {
-            console.log("leave");
             this.hoverItem = false;
         },
     }
