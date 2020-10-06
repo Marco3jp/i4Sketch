@@ -27,7 +27,7 @@
                 <div v-for="part in structure.parts">
                     <template>
                         <div></div>
-                        <structure-preview-li :part="part" :key="part.uuid" draggable="true"></structure-preview-li>
+                        <structure-preview-item :part="part" :key="part.uuid" draggable="true"></structure-preview-item>
                         <div></div>
                     </template>
                 </div>
@@ -49,7 +49,7 @@
 import Vue from 'vue';
 import {v4 as uuidv4} from 'uuid';
 import {BasicDesignData, RectPart, TextPart} from "~/src/interface/BasicDesignData";
-import StructurePreviewLi from "~/components/StructurePreviewLi.vue";
+import StructurePreviewItem from "~/components/StructurePreviewItem.vue";
 import prettier from "prettier/standalone";
 import htmlparser from "prettier/parser-html";
 import cssparser from "prettier/parser-postcss"
@@ -66,7 +66,7 @@ interface cliData {
 
 export default Vue.extend({
     name: "cli",
-    components: {StructurePreviewLi},
+    components: {StructurePreviewItem},
     data(): cliData {
         return {
             structure: {} as BasicDesignData,
