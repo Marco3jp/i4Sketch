@@ -24,13 +24,9 @@
         <h2>データプレビュー</h2>
         <div class="cli__data-preview">
             <div class="cli__data-preview-design">
-                <div v-for="part in structure.parts">
-                    <template>
-                        <div></div>
-                        <structure-preview-item :part="part" :key="part.uuid" draggable="true"></structure-preview-item>
-                        <div></div>
-                    </template>
-                </div>
+                <drop-line></drop-line>
+                <structure-preview-item v-for="(part, index) in structure.parts" :part="part"
+                                        :key="part.uuid"></structure-preview-item>
             </div>
         </div>
         <h2>ソースコードプレビュー</h2>
@@ -50,6 +46,7 @@ import Vue from 'vue';
 import {v4 as uuidv4} from 'uuid';
 import {BasicDesignData, RectPart, TextPart} from "~/src/interface/BasicDesignData";
 import StructurePreviewItem from "~/components/StructurePreviewItem.vue";
+import DropLine from '~/components/cli/DropLine.vue';
 import prettier from "prettier/standalone";
 import htmlparser from "prettier/parser-html";
 import cssparser from "prettier/parser-postcss"
@@ -66,7 +63,7 @@ interface cliData {
 
 export default Vue.extend({
     name: "cli",
-    components: {StructurePreviewItem},
+    components: {StructurePreviewItem, DropLine},
     data(): cliData {
         return {
             structure: {} as BasicDesignData,
@@ -162,8 +159,7 @@ export default Vue.extend({
                 return part.uuid === uuid
             })
         }
-    },
-    computed: {}
+    }
 })
 </script>
 
