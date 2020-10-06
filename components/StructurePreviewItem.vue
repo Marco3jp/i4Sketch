@@ -6,15 +6,15 @@
 
         <div class="child-items">
             <!-- index: 0 に相当する挿入箇所 -->
-            <drop-line></drop-line>
+            <drop-line :index="0"></drop-line>
 
             <div v-if="typeof part.childElements !== 'undefined'">
                 <StructurePreviewItem v-for="(child, index) in part.childElements" :part="child"
-                                      :key="index"></StructurePreviewItem>
+                                      :key="index" :index="index"></StructurePreviewItem>
             </div>
         </div>
 
-        <drop-line></drop-line>
+        <drop-line :index="index"></drop-line>
     </div>
 </template>
 
@@ -24,7 +24,7 @@ import DropLine from '~/components/cli/DropLine.vue';
 
 export default Vue.extend({
     name: "StructurePreviewItem",
-    props: ['part'],
+    props: ['part', 'index'],
     components: {DropLine},
     data() {
         return {
@@ -32,11 +32,8 @@ export default Vue.extend({
         }
     },
     methods: {
-        onDropItem(index: number) {
-
-        },
         onDragstart() {
-            this.$store.commit("structure/catchItem")
+            this.$store.commit("structure/catchItem", this.part.uuid)
         },
         onDragEnd() {
             this.$store.commit("structure/throwItem")

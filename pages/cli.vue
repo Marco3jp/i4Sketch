@@ -26,7 +26,7 @@
             <div class="cli__data-preview-design">
                 <drop-line></drop-line>
                 <structure-preview-item v-for="(part, index) in structure.parts" :part="part"
-                                        :key="part.uuid"></structure-preview-item>
+                                        :key="part.uuid" :index="index"></structure-preview-item>
             </div>
         </div>
         <h2>ソースコードプレビュー</h2>
@@ -50,14 +50,10 @@ import DropLine from '~/components/cli/DropLine.vue';
 import prettier from "prettier/standalone";
 import htmlparser from "prettier/parser-html";
 import cssparser from "prettier/parser-postcss"
-import {sampleDesign} from "~/src/sample/design"
 
 interface cliData {
-    structure: BasicDesignData,
     prefix: string,
     head: string,
-    html: string,
-    css: string,
     isInsertedSampleData: boolean,
 }
 
@@ -66,25 +62,46 @@ export default Vue.extend({
     components: {StructurePreviewItem, DropLine},
     data(): cliData {
         return {
-            structure: {} as BasicDesignData,
             prefix: '<!DOCTYPE html><html lang="ja">',
             head: '<head><meta charset=\"UTF-8\"><title>Test Title</title></head>',
-            html: '',
-            css: '',
             isInsertedSampleData: false
         }
     },
+    computed: {
+        structure: function (): BasicDesignData {
+            return this.$store.state.structure.tree
+        },
+        html: function (): string {
+            if (this.structure?.parts === undefined || this.structure?.parts.length === 0) return ''
+            let generatingHTML = this.prefix + this.head + "<body>";
+            generatingHTML += this.generateSourceString(this.structure.parts);
+            generatingHTML += "</body></html>"
+            return prettier.format(generatingHTML, {
+                parser: "html",
+                plugins: [htmlparser],
+            });
+        },
+        css: function (): string {
+            if (this.structure?.parts === undefined || this.structure?.parts.length === 0) return ''
+            let generatingCSS = '';
+            this.structure.parts.forEach(part => {
+                generatingCSS += this.generateElementCSS(part)
+            })
+            return prettier.format(generatingCSS, {
+                parser: "css",
+                plugins: [cssparser],
+            });
+        }
+    },
     methods: {
+        onInsertDesign() {
+            this.$store.commit("structure/insertDesign")
+        },
         onInputDesign(event: Event) {
             const fileReader = new FileReader();
             fileReader.onload = () => {
                 if (typeof fileReader.result !== "undefined" && fileReader.result !== null && !(fileReader.result instanceof ArrayBuffer)) {
-                    this.structure = JSON.parse(fileReader.result);
-                    this.structure.parts.forEach(part => {
-                        part.uuid = uuidv4();
-                    })
-                    this.isInsertedSampleData = true
-                    this.generateCode()
+                    this.$store.commit('structure/inputDesign', JSON.parse(fileReader.result));
                 } else {
                     throw new Error("inputted useless file");
                 }
@@ -96,14 +113,6 @@ export default Vue.extend({
                 fileReader.readAsText(elm.files[0]);
             }
         },
-        onInsertDesign() {
-            this.structure = sampleDesign
-            this.structure.parts.forEach(part => {
-                part.uuid = uuidv4();
-            })
-            this.isInsertedSampleData = true
-            this.generateCode()
-        },
         generateElementCSS(part: TextPart | RectPart): string {
             let code = `#gen${part.id} { position: absolute; height: ${part.size.height}px; width: ${part.size.width}px; top: ${part.position.y}px; left: ${part.position.x}px; border: 1px solid rgba(0, 0, 0, .25);`
             if (part.type === 'text') {
@@ -112,16 +121,6 @@ export default Vue.extend({
                 code += `background-color: ${part.decoration?.backgroundColor ?? 'transparent'};}`
             }
             return code
-        },
-        generateCSS() {
-            let generatingCSS = '';
-            this.structure.parts.forEach(part => {
-                generatingCSS += this.generateElementCSS(part)
-            })
-            this.css = prettier.format(generatingCSS, {
-                parser: "css",
-                plugins: [cssparser],
-            });
         },
         generateSourceString(parts: Array<TextPart | RectPart>, sourceString = ""): string {
             parts.forEach(part => {
@@ -138,27 +137,6 @@ export default Vue.extend({
             });
             return sourceString;
         },
-        generateStructureCode() {
-            let generatingHTML = this.prefix + this.head + "<body>";
-            generatingHTML += this.generateSourceString(this.structure.parts);
-            generatingHTML += "</body></html>"
-            this.html = prettier.format(generatingHTML, {
-                parser: "html",
-                plugins: [htmlparser],
-            });
-
-            // this.css += ".gen--wrapper { border: 1px solid black; };
-        },
-        generateCode() {
-            if (this.structure.parts.length === 0) return ''
-            this.generateCSS();
-            this.generateStructureCode();
-        },
-        findPart(uuid: string): TextPart | RectPart | undefined {
-            return this.structure.parts.find(part => {
-                return part.uuid === uuid
-            })
-        }
     }
 })
 </script>
