@@ -1,5 +1,5 @@
 import {MutationTree} from 'vuex'
-import {BasicDesignData, RectPart, TextPart} from "~/src/interface/BasicDesignData";
+import {BasicDesignData, RectPart} from "~/src/interface/BasicDesignData";
 import {sampleDesign} from "~/src/sample/design";
 import {v4 as uuidv4} from "uuid";
 
@@ -9,41 +9,40 @@ export const state = () => ({
     isHoldingItem: false,
     holdingItem: {},
     holdingItemIndex: 0,
-    holdingItemParent: [] as Array<TextPart | RectPart>,
+    holdingItemBrothers: [] as Array<RectPart>,
     tree: {} as BasicDesignData,
 });
 
 export const mutations: MutationTree<RootState> = {
-    catchItem(state, {item, index, parent}) {
+    catchItem(state, {item, index, brothers}) {
         state.isHoldingItem = true;
         state.holdingItem = item;
         state.holdingItemIndex = index;
-        state.holdingItemParent = parent;
+        state.holdingItemBrothers = brothers;
     },
     throwItem(state) {
         state.isHoldingItem = false;
     },
     insertDesign(state) {
         state.tree = sampleDesign
-        state.tree.parts.forEach(part => {
+        state.tree.childElements.forEach(part => {
             part.uuid = uuidv4();
         })
     },
     inputDesign(state, file) {
         state.tree = file;
-        state.tree.parts.forEach(part => {
+        state.tree.childElements.forEach(part => {
             part.uuid = uuidv4();
         })
     },
-    moveItem(state, {target, targetIndex}) {
-        if (state.holdingItemParent) {
-            if (target.childElements?.length) {
-                target.childElements.splice(targetIndex, 0, state.holdingItem);
-            } else {
-                target.childElements = [state.holdingItem];
-            }
-
-            state.holdingItemParent.splice(state.holdingItemIndex, 1);
+    copyItem(state, {target, targetIndex}) {
+        if (target.childElements?.length) {
+            target.childElements.splice(targetIndex, 0, state.holdingItem);
+        } else {
+            target.childElements = [state.holdingItem];
         }
-    }
+    },
+    deleteItem(state) {
+        state.holdingItemBrothers.splice(state.holdingItemIndex, 1);
+    },
 };

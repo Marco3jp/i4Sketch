@@ -7,14 +7,12 @@
         <div class="child-items" v-if="!isTextPart">
             <!-- index: 0 に相当する挿入箇所 -->
             <drop-line @drop="onDrop(0)"></drop-line>
-
-            <div v-if="part.childElements">
-                <StructurePreviewItem v-for="(child, index) in part.childElements" :part="child"
-                                      :key="index" :index="index" :parent="part.childElements"></StructurePreviewItem>
-            </div>
+            <structure-preview-item v-for="(child, index) in part.childElements" :part="child"
+                                    :key="child.uuid" :index="index"
+                                    :parent="part" @childUpdate="$forceUpdate()"></structure-preview-item>
         </div>
 
-        <drop-line @drop="onDropParent(index)"></drop-line>
+        <drop-line @drop="onDropParent(index + 1)"></drop-line>
     </div>
 </template>
 
@@ -33,16 +31,29 @@ export default Vue.extend({
     },
     methods: {
         onDragstart() {
-            this.$store.commit("structure/catchItem", {item: this.part, index: this.index, parent: this.parent})
+            this.$store.commit("structure/catchItem", {
+                item: this.part,
+                index: this.index,
+                brothers: this.parent.childElements
+            })
         },
         onDragEnd() {
-            this.$store.commit("structure/throwItem")
+            this.$store.commit("structure/throwItem");
         },
         onDrop(index: number) {
-            this.$store.commit("structure/moveItem", {target: this.part, targetIndex: index});
+            if (this.$store.state.structure.holdingItemBrother) {
+                this.$store.commit("structure/copyItem", {target: this.part, targetIndex: index});
+                this.$store.commit("structure/deleteItem");
+                this.$forceUpdate();
+            }
         },
         onDropParent(index: number) {
-            this.$store.commit("structure/moveItem", {target: this.parent, targetIndex: index});
+            if (this.$store.state.structure.holdingItemBrother) {
+                this.$store.commit("structure/copyItem", {target: this.parent, targetIndex: index});
+                this.$store.commit("structure/deleteItem");
+                this.$forceUpdate();
+                this.$emit("childUpdate");
+            }
         },
     },
     computed: {

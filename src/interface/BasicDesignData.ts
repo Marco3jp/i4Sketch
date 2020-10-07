@@ -30,5 +30,5 @@ export interface RectPart extends BasePart {
 }
 
 export interface BasicDesignData {
-    "parts": Array<TextPart | RectPart>
+    "childElements": Array<TextPart | RectPart>
 }

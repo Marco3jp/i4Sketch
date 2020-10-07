@@ -11,23 +11,14 @@
                 <button type="button" @click="onInsertDesign" :disabled="isInsertedSampleData">Insert Sample Design
                 </button>
             </div>
-            <!--div class="cli_input-structure">
-                <label v-if="!isInsertedSampleStructure">S
-                    Structure:
-                    <input type="file" accept="application/json" @change="onInputStructure">
-                </label>
-                <button type="button" @click="onInsertStructure" :disabled="isInsertedSampleStructure">Insert Sample
-                    Structure
-                </button>
-            </div-->
         </div>
         <h2>データプレビュー</h2>
         <div class="cli__data-preview">
             <div class="cli__data-preview-design">
                 <drop-line></drop-line>
-                <structure-preview-item v-for="(part, index) in structure.parts" :part="part"
+                <structure-preview-item v-for="(part, index) in structure.childElements" :part="part"
                                         :key="part.uuid" :index="index"
-                                        :parent="structure.parts"></structure-preview-item>
+                                        :parent="structure"></structure-preview-item>
             </div>
         </div>
         <h2>ソースコードプレビュー</h2>
@@ -72,9 +63,9 @@ export default Vue.extend({
             return this.$store.state.structure.tree
         },
         html: function (): string {
-            if (this.structure?.parts === undefined || this.structure?.parts.length === 0) return ''
+            if (this.structure?.childElements === undefined || this.structure?.childElements.length === 0) return ''
             let generatingHTML = this.prefix + this.head + "<body>";
-            generatingHTML += this.generateSourceString(this.structure.parts);
+            generatingHTML += this.generateSourceString(this.structure.childElements);
             generatingHTML += "</body></html>"
             return prettier.format(generatingHTML, {
                 parser: "html",
@@ -82,10 +73,10 @@ export default Vue.extend({
             })
         },
         css: function (): string {
-            if (this.structure?.parts === undefined || this.structure?.parts.length === 0) return ''
+            if (this.structure?.childElements === undefined || this.structure?.childElements.length === 0) return ''
             let generatingCSS = '';
-            this.structure.parts.forEach(part => {
-                generatingCSS += this.generateElementCSS(part)
+            this.structure.childElements.forEach(childElement => {
+                generatingCSS += this.generateElementCSS(childElement)
             })
             return prettier.format(generatingCSS, {
                 parser: "css",

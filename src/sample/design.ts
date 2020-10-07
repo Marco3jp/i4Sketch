@@ -1,7 +1,7 @@
 import {BasicDesignData} from "~/src/interface/BasicDesignData";
 
 export let sampleDesign: BasicDesignData = {
-    parts: [
+    childElements: [
         {
             id: '1',
             name: 'ページタイトル',

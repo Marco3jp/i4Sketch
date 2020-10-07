@@ -29,22 +29,22 @@ export default Vue.extend({
             fileReader.readAsText(this.$refs["input"].files[0]);
         },
         insertAbsoluteTree(designData: BasicDesignData) {
-            for (let i = 0; i < designData.parts.length; i++) {
-                console.log(designData.parts[i]);
+            for (let i = 0; i < designData.childElements.length; i++) {
+                console.log(designData.childElements[i]);
                 let element: i4Element;
                 element = new i4Element("div", {
                     position: "absolute",
-                    width: designData.parts[i].size.width + 'px',
-                    height: designData.parts[i].size.height + 'px',
-                    top: designData.parts[i].position.y + 'px',
-                    left: designData.parts[i].position.x + 'px',
-                }, designData.parts[i].name);
+                    width: designData.childElements[i].size.width + 'px',
+                    height: designData.childElements[i].size.height + 'px',
+                    top: designData.childElements[i].position.y + 'px',
+                    left: designData.childElements[i].position.x + 'px',
+                }, designData.childElements[i].name);
 
-                if (designData.parts[i].type === "text") {
-                    element.style.color = (designData.parts[i] as TextPart)?.decoration?.fontColor;
-                    element.appendChild(new i4TextElement(designData.parts[i].content));
+                if (designData.childElements[i].type === "text") {
+                    element.style.color = (designData.childElements[i] as TextPart)?.decoration?.fontColor;
+                    element.appendChild(new i4TextElement(designData.childElements[i].content));
                 } else {
-                    element.style.backgroundColor = (designData.parts[i] as RectPart)?.decoration?.backgroundColor;
+                    element.style.backgroundColor = (designData.childElements[i] as RectPart)?.decoration?.backgroundColor;
                 }
                 this.$tree.absolute.appendChild(element);
             }
