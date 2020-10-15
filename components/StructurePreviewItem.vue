@@ -41,14 +41,14 @@ export default Vue.extend({
             this.$store.commit("structure/throwItem");
         },
         onDrop(index: number) {
-            if (this.$store.state.structure.holdingItemBrother) {
+            if (this.$store.state.structure.holdingItemBrothers) {
                 this.$store.commit("structure/copyItem", {target: this.part, targetIndex: index});
                 this.$store.commit("structure/deleteItem");
                 this.$forceUpdate();
             }
         },
         onDropParent(index: number) {
-            if (this.$store.state.structure.holdingItemBrother) {
+            if (this.$store.state.structure.holdingItemBrothers) {
                 this.$store.commit("structure/copyItem", {target: this.parent, targetIndex: index});
                 this.$store.commit("structure/deleteItem");
                 this.$forceUpdate();
