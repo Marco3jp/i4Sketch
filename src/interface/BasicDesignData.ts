@@ -27,6 +27,7 @@ export interface RectPart extends BasePart {
         "backgroundColor"?: string
     }
     "childElements"?: Array<TextPart | RectPart>
+    "isWrapper"?: boolean
 }
 
 export interface BasicDesignData {
