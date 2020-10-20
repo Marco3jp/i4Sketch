@@ -13,6 +13,7 @@
             </div>
         </div>
         <h2>データプレビュー</h2>
+        <button @click="onClickAddWrapperElement">Add Wrapper Element</button>
         <div class="cli__data-preview">
             <div class="cli__data-preview-design">
                 <drop-line></drop-line>
@@ -105,11 +106,16 @@ export default Vue.extend({
             }
         },
         generateElementCSS(part: TextPart | RectPart): string {
-            let code = `#gen${part.id} { position: absolute; height: ${part.size.height}px; width: ${part.size.width}px; top: ${part.position.y}px; left: ${part.position.x}px; border: 1px solid rgba(0, 0, 0, .25);`
-            if (part.type === 'text') {
-                code += `color: ${part.decoration?.fontColor ?? 'inherit'};}`
-            } else {
-                code += `background-color: ${part.decoration?.backgroundColor ?? 'transparent'};}`
+            let code: string = '';
+
+            if(part.type !== "rect" || !part.isWrapper) {
+                code = `#gen${part.id} { position: absolute; height: ${part.size.height}px; width: ${part.size.width}px; top: ${part.position.y}px; left: ${part.position.x}px; border: 1px solid rgba(0, 0, 0, .25);`;
+
+                if (part.type === 'text') {
+                    code += `color: ${part.decoration?.fontColor ?? 'inherit'};}`
+                } else {
+                    code += `background-color: ${part.decoration?.backgroundColor ?? 'transparent'};}`
+                }
             }
 
             if (part.type === "rect" && part.childElements?.length) {
@@ -136,6 +142,9 @@ export default Vue.extend({
             });
             return sourceString;
         },
+        onClickAddWrapperElement(){
+            this.$store.commit('structure/addWrapper');
+        }
     }
 })
 </script>

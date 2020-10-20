@@ -57,4 +57,18 @@ export const mutations: MutationTree<RootState> = {
     deleteItem(state) {
         state.holdingItemBrothers.splice(state.holdingItemIndex, 1);
     },
+    addWrapper(state) {
+        const id = uuidv4();
+        state.tree.childElements?.push({
+            childElements: [],
+            content: "wrapper",
+            id: id,
+            isWrapper: true,
+            name: "Wrapper",
+            position: {x: 0, y: 0},
+            size: {height: 0, width: 0},
+            type: "rect",
+            uuid: id
+        })
+    }
 };
