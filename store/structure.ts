@@ -1,5 +1,5 @@
 import {MutationTree} from 'vuex'
-import {BasicDesignData, RectPart} from "~/src/interface/BasicDesignData";
+import {BasicDesignData, RectPart, TextPart} from "~/src/interface/BasicDesignData";
 import {sampleDesign} from "~/src/sample/design";
 import {v4 as uuidv4} from "uuid";
 
@@ -10,7 +10,17 @@ export const state = () => ({
     holdingItem: {},
     holdingItemIndex: 0,
     holdingItemBrothers: [] as Array<RectPart>,
-    tree: {} as BasicDesignData,
+    tree: {
+        id: 'root',
+        uuid: uuidv4(),
+        type: "rect",
+        childElements: [],
+        content: "",
+        decoration: {},
+        name: "root",
+        position: {x: 0, y: 0},
+        size: {height: 1080, width: 1920}
+    } as RectPart,
 });
 
 export const mutations: MutationTree<RootState> = {
@@ -24,16 +34,18 @@ export const mutations: MutationTree<RootState> = {
         state.isHoldingItem = false;
     },
     insertDesign(state) {
-        state.tree = sampleDesign
+        state.tree.childElements = sampleDesign.childElements;
         state.tree.childElements.forEach(part => {
             part.uuid = uuidv4();
         })
     },
     inputDesign(state, file) {
-        state.tree = file;
-        state.tree.childElements.forEach(part => {
-            part.uuid = uuidv4();
-        })
+        if (file.childElements) {
+            state.tree.childElements = file.childElements as Array<RectPart | TextPart>;
+            state.tree.childElements.forEach(part => {
+                part.uuid = uuidv4();
+            })
+        }
     },
     copyItem(state, {target, targetIndex}) {
         if (target.childElements?.length) {

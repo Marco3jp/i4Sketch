@@ -59,7 +59,7 @@ export default Vue.extend({
         }
     },
     computed: {
-        structure: function (): BasicDesignData {
+        structure: function (): RectPart {
             return this.$store.state.structure.tree
         },
         html: function (): string {
