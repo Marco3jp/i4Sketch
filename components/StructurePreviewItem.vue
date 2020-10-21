@@ -9,7 +9,7 @@
             <drop-line @drop="onDrop(0)"></drop-line>
             <structure-preview-item v-for="(child, index) in part.childElements" :part="child"
                                     :key="child.uuid" :index="index"
-                                    :parent="part" @childUpdate="$forceUpdate()"></structure-preview-item>
+                                    :parent="part" @childUpdate="onChildUpdate"></structure-preview-item>
         </div>
 
         <drop-line @drop="onDropParent(index + 1)"></drop-line>
@@ -55,6 +55,10 @@ export default Vue.extend({
                 this.$emit("childUpdate");
             }
         },
+        onChildUpdate() {
+            this.$forceUpdate()
+            this.$emit("childUpdate");
+        }
     },
     computed: {
         isTextPart() {

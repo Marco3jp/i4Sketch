@@ -19,7 +19,7 @@
                 <drop-line @drop="onDrop(0)"></drop-line>
                 <structure-preview-item v-for="(part, index) in structure.childElements" :part="part"
                                         :key="part.uuid" :index="index"
-                                        :parent="structure"></structure-preview-item>
+                                        :parent="structure" @childUpdate="onChildUpdate"></structure-preview-item>
             </div>
         </div>
         <h2>ソースコードプレビュー</h2>
@@ -151,6 +151,9 @@ export default Vue.extend({
         },
         onClickAddWrapperElement() {
             this.$store.commit('structure/addWrapper');
+        },
+        onChildUpdate() {
+            this.$forceUpdate()
         }
     }
 })
