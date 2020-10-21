@@ -29,6 +29,8 @@ export const mutations: MutationTree<RootState> = {
         state.holdingItem = item;
         state.holdingItemIndex = index;
         state.holdingItemBrothers = brothers;
+
+        // console.log('catch', state.holdingItem.uuid);
     },
     throwItem(state) {
         state.isHoldingItem = false;
@@ -49,6 +51,8 @@ export const mutations: MutationTree<RootState> = {
     },
     copyItem(state, {target, targetIndex}: { target: RectPart, targetIndex: number }) {
         if (target.childElements?.length) {
+            // console.log('insert', target.childElements[targetIndex - 1]?.uuid ?? 'no item', 'と', target.childElements[targetIndex]?.uuid ?? 'no item', 'の間')
+
             target.childElements.splice(targetIndex, 0, state.holdingItem);
 
             for (let i = targetIndex + 1; i < target.childElements.length; i++) {
@@ -57,10 +61,12 @@ export const mutations: MutationTree<RootState> = {
                 }
             }
         } else {
+            // console.log('create')
             target.childElements = [state.holdingItem];
         }
     },
     deleteItem(state) {
+        // console.log('delete', state.holdingItemBrothers[state.holdingItemIndex].uuid);
         state.holdingItemBrothers.splice(state.holdingItemIndex, 1);
     },
     addWrapper(state) {
