@@ -16,14 +16,14 @@
         <button @click="onClickAddWrapperElement">Add Wrapper Element</button>
         <div class="cli__data-preview">
             <div class="cli__data-preview-design">
-                <drop-line></drop-line>
+                <drop-line @drop="onDrop(0)"></drop-line>
                 <structure-preview-item v-for="(part, index) in structure.childElements" :part="part"
                                         :key="part.uuid" :index="index"
                                         :parent="structure"></structure-preview-item>
             </div>
         </div>
         <h2>ソースコードプレビュー</h2>
-        <div class="cli__code-preview ">
+        <div class="cli__code-preview">
             <div class="cli__code-preview-HTML">
                 <pre>{{ html }}</pre>
             </div>
@@ -105,10 +105,17 @@ export default Vue.extend({
                 fileReader.readAsText(elm.files[0]);
             }
         },
+        onDrop(index: number) {
+            if (this.$store.state.structure.holdingItemBrothers) {
+                this.$store.commit("structure/copyItem", {target: this.structure.childElements, targetIndex: index});
+                this.$store.commit("structure/deleteItem");
+                this.$forceUpdate();
+            }
+        },
         generateElementCSS(part: TextPart | RectPart): string {
             let code: string = '';
 
-            if(part.type !== "rect" || !part.isWrapper) {
+            if (part.type !== "rect" || !part.isWrapper) {
                 code = `#gen${part.id} { position: absolute; height: ${part.size.height}px; width: ${part.size.width}px; top: ${part.position.y}px; left: ${part.position.x}px; border: 1px solid rgba(0, 0, 0, .25);`;
 
                 if (part.type === 'text') {
@@ -142,7 +149,7 @@ export default Vue.extend({
             });
             return sourceString;
         },
-        onClickAddWrapperElement(){
+        onClickAddWrapperElement() {
             this.$store.commit('structure/addWrapper');
         }
     }
