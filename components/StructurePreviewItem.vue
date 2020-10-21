@@ -1,5 +1,5 @@
 <template>
-    <div draggable="true" @dragstart="onDragstart" @dragend="onDragEnd" @dragenter="isHoverItem = true"
+    <div draggable="true" @dragstart.stop="onDragstart" @dragend="onDragEnd" @dragenter="isHoverItem = true"
          @dragleave="isHoverItem =false">
         <span v-if="typeof part.id !== 'undefined'">{{ part.name }} ({{ part.type }})</span>
         <span v-else>wrapper element</span>
