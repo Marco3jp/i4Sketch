@@ -107,7 +107,7 @@ export default Vue.extend({
         },
         onDrop(index: number) {
             if (this.$store.state.structure.holdingItemBrothers) {
-                this.$store.commit("structure/copyItem", {target: this.structure.childElements, targetIndex: index});
+                this.$store.commit("structure/copyItem", {target: this.structure, targetIndex: index});
                 this.$store.commit("structure/deleteItem");
                 this.$forceUpdate();
             }
