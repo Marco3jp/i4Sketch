@@ -1,5 +1,5 @@
 import {MutationTree} from 'vuex'
-import {BasicDesignData, RectPart, TextPart} from "~/src/interface/BasicDesignData";
+import {RectPart, TextPart} from "~/src/interface/BasicDesignData";
 import {sampleDesign} from "~/src/sample/design";
 import {v4 as uuidv4} from "uuid";
 
@@ -7,7 +7,7 @@ export type RootState = ReturnType<typeof state>
 
 export const state = () => ({
     isHoldingItem: false,
-    holdingItem: {},
+    holdingItem: {} as RectPart | TextPart,
     holdingItemIndex: 0,
     holdingItemBrothers: [] as Array<RectPart>,
     tree: {
@@ -47,9 +47,15 @@ export const mutations: MutationTree<RootState> = {
             })
         }
     },
-    copyItem(state, {target, targetIndex}) {
+    copyItem(state, {target, targetIndex}: { target: RectPart, targetIndex: number }) {
         if (target.childElements?.length) {
             target.childElements.splice(targetIndex, 0, state.holdingItem);
+
+            for (let i = targetIndex + 1; i < target.childElements.length; i++) {
+                if (target.childElements[i].uuid === state.holdingItem.uuid) {
+                    state.holdingItemIndex++;
+                }
+            }
         } else {
             target.childElements = [state.holdingItem];
         }
