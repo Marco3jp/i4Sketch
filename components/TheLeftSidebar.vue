@@ -16,43 +16,44 @@
 </template>
 
 <script lang="ts">
-    import Vue from 'vue';
-    import TheLeftSidebarItem from "~/components/TheLeftSidebarItem.vue";
+import Vue from 'vue';
+import TheLeftSidebarItem from "~/components/TheLeftSidebarItem.vue";
 
-    export default Vue.extend({
-        name: "TheLeftSidebar",
-        components: {TheLeftSidebarItem},
-        computed: {
-            absoluteTree() {
-                return this.$tree.absolute
-            },
-            relativeTree() {
-                return this.$tree.relative
-            }
+export default Vue.extend({
+    name: "TheLeftSidebar",
+    components: {TheLeftSidebarItem},
+    computed: {
+        absoluteTree() {
+            return this.$tree.absolute
+        },
+        relativeTree() {
+            return this.$tree.relative
         }
-    });
+    }
+});
 </script>
 
 <style scoped lang="scss">
-    .left-sidebar {
-        height: 100%;
-        width: 280px;
-        border-right: 2px solid gray;
-        display: flex;
-        flex-direction: column;
-        .tree-wrapper{
-            overflow: auto;
-            flex: 1;
+.left-sidebar {
+    height: 100%;
+    width: 280px;
+    border-right: 2px solid gray;
+    display: flex;
+    flex-direction: column;
 
-            &:first-of-type{
-                border-bottom: 1px solid black;
-            }
+    .tree-wrapper {
+        overflow: auto;
+        flex: 1;
 
-            ul {
-                list-style: none;
-                padding-left: 1rem;
-            }
+        &:first-of-type {
+            border-bottom: 1px solid black;
         }
 
+        ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
     }
+
+}
 </style>

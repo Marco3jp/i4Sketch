@@ -1,5 +1,6 @@
 interface BasePart {
     "id": string
+    "uuid"?: string
     "name": string
     "content"?: string
     "position": {
@@ -25,16 +26,10 @@ export interface RectPart extends BasePart {
     "decoration"?: {
         "backgroundColor"?: string
     }
+    "childElements"?: Array<TextPart | RectPart>
+    "isWrapper"?: boolean
 }
 
 export interface BasicDesignData {
-    "meta": {
-        "canvas": {
-            "size": {
-                "width": number
-                "height": number
-            },
-        }
-    },
-    "parts": Array<TextPart | RectPart>
+    "childElements": Array<TextPart | RectPart>
 }
