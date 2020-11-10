@@ -1,0 +1,14 @@
+{
+  "name": "count-styled-element",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc --outFile index.js index.ts"
+  },
+  "author": "Marco",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.0.5"
+  }
+}
