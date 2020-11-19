@@ -116,7 +116,7 @@ export default Vue.extend({
             let code: string = '';
 
             if (part.type !== "rect" || !part.isWrapper) {
-                code = `#gen_${part.id} { position: absolute; height: ${part.size.height}px; width: ${part.size.width}px; top: ${part.position.y}px; left: ${part.position.x}px; border: 1px solid rgba(0, 0, 0, .25);`;
+                code = `#gen_${part.id} { position: absolute; height: ${part.size.height}px; width: ${part.size.width}px; top: ${part.position.y}px; left: ${part.position.x}px;`; // border: 1px solid rgba(0, 0, 0, .25);
 
                 if (part.type === 'text') {
                     code += `color: ${part.decoration?.fontColor ?? 'inherit'};}`
