@@ -116,7 +116,7 @@ export default Vue.extend({
             let code: string = '';
 
             if (part.type !== "rect" || !part.isWrapper) {
-                code = `#gen${part.id} { position: absolute; height: ${part.size.height}px; width: ${part.size.width}px; top: ${part.position.y}px; left: ${part.position.x}px; border: 1px solid rgba(0, 0, 0, .25);`;
+                code = `#gen_${part.id} { position: absolute; height: ${part.size.height}px; width: ${part.size.width}px; top: ${part.position.y}px; left: ${part.position.x}px; border: 1px solid rgba(0, 0, 0, .25);`;
 
                 if (part.type === 'text') {
                     code += `color: ${part.decoration?.fontColor ?? 'inherit'};}`
@@ -137,10 +137,10 @@ export default Vue.extend({
             let sourceString = "";
             parts.forEach(part => {
                 if (part.type === "text") {
-                    sourceString += `<p id="gen${part.id}">${part.content}</p>`
+                    sourceString += `<p id="gen_${part.id}">${part.content}</p>`
                     // return sourceString;
                 } else if (part.type === "rect") {
-                    sourceString += `<div id="gen${part.id}">`
+                    sourceString += `<div id="gen_${part.id}">`
                     if (typeof part.childElements !== "undefined" && part.childElements.length > 0) {
                         sourceString += this.generateSourceString(part.childElements)
                     }

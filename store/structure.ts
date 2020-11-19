@@ -70,7 +70,7 @@ export const mutations: MutationTree<RootState> = {
         state.holdingItemBrothers.splice(state.holdingItemIndex, 1);
     },
     addWrapper(state) {
-        const id = uuidv4();
+        const id = "wrapper_" + uuidv4();
         state.tree.childElements?.push({
             childElements: [],
             content: "wrapper",
