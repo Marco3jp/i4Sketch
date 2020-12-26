@@ -1,5 +1,7 @@
 const regex = /[#.]/;
 const classIdList: Array<string> = [];
+const totalCssTextList: Array<string> = [];
+const usedCssTextList: Array<string> = [];
 const styleSheetsErrors: Array<any> = [];
 
 // 全要素数
@@ -14,6 +16,14 @@ for (let i = 0; i < document.styleSheets.length; i++) {
             // ruleには CSSMediaRule とか CSSSupportsRule , CSSKeyframesRule なども入る可能性があります
             if (isCSSStyleRule(rule) && regex.test(rule.selectorText)) {
                 classIdList.push(rule.selectorText);
+
+                // CSS文字列を全件取る
+                totalCssTextList.push(rule.cssText);
+
+                //ドキュメント内で使われているCSS文字列だけ
+                if (document.querySelector(rule.selectorText)) {
+                    usedCssTextList.push(rule.cssText);
+                }
             }
         }
     } catch (e) {
@@ -38,14 +48,21 @@ const elements = document.querySelectorAll(query);
 // スタイル設定されていた要素数
 exportMessage += `${elements.length}\t`;
 
-// CSSクエリの数
-exportMessage += `${classIdList.length}`;
+// 使われているCSSの文字数
+exportMessage += `${usedCssTextList.join('').length}\t`;
 
-// 出力形式は | allElementCount | styledElementCount | cssQueryCount | の順で、
+// ClassやIdに紐づくCSSの文字数
+exportMessage += `${totalCssTextList.join('').length}\t`;
+
+// 出力形式は | allElementCount | styledElementCount | usingCssTextLength | totalCssTextLength |の順で、
 // エクセルなどにそのまま貼り付け出来るように、タブ文字( \t )で区切っている
 console.log(exportMessage);
 
 console.log(styleSheetsErrors);
+
+console.log(usedCssTextList);
+
+console.log(totalCssTextList);
 
 function isCSSStyleRule(rule: unknown): rule is CSSStyleRule {
     return rule instanceof CSSStyleRule
