@@ -5,7 +5,6 @@
         <span v-else>wrapper element</span>
 
         <div class="child-items" v-if="!isTextPart">
-            <!-- index: 0 に相当する挿入箇所 -->
             <drop-line @drop="onDrop(0)"></drop-line>
             <structure-preview-item v-for="(child, index) in part.childElements" :part="child"
                                     :key="child.uuid" :index="index"

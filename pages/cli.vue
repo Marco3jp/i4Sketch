@@ -138,7 +138,6 @@ export default Vue.extend({
             parts.forEach(part => {
                 if (part.type === "text") {
                     sourceString += `<p id="gen_${part.id}">${part.content}</p>`
-                    // return sourceString;
                 } else if (part.type === "rect") {
                     sourceString += `<div id="gen_${part.id}">`
                     if (typeof part.childElements !== "undefined" && part.childElements.length > 0) {
