@@ -77,7 +77,7 @@ export let sampleDesign: BasicDesignData = {
                 height: 400
             },
             decoration: {
-                backgroundColor: '#666'
+                backgroundColor: '#666666'
             }
         }
     ]
