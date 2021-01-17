@@ -1,5 +1,5 @@
 {
-    "parts": [
+    "childElements": [
         {
             "id": "1",
             "name": "ページタイトル",
@@ -24,8 +24,7 @@
             "content": "記事の見出し",
             "position": {
                 "x": 24,
-                "y": 72,
-                "@comment": "y = 60 + 12"
+                "y": 72
             },
             "size": {
                 "width": 200,
@@ -38,8 +37,7 @@
             "type": "rect",
             "position": {
                 "x": 24,
-                "y": 120,
-                "@comment": "y = 108 + 12"
+                "y": 120
             },
             "size": {
                 "width": 800,
@@ -53,11 +51,10 @@
             "id": "4",
             "name": "記事の本文",
             "type": "text",
-            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            "content": "記事の本文記事の本文",
             "position": {
                 "x": 24,
-                "y": 260,
-                "@comment": "y = 240 + 20"
+                "y": 260
             },
             "size": {
                 "width": 800,
@@ -71,8 +68,7 @@
             "content": "画像",
             "position": {
                 "x": 24,
-                "y": 370,
-                "@comment": "y = 350 + 20"
+                "y": 370
             },
             "size": {
                 "width": 600,
