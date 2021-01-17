@@ -60,9 +60,9 @@ console.log(exportMessage);
 
 console.log(styleSheetsErrors);
 
-console.log(usedCssTextList);
+// console.log(usedCssTextList);
 
-console.log(totalCssTextList);
+// console.log(totalCssTextList);
 
 function isCSSStyleRule(rule: unknown): rule is CSSStyleRule {
     return rule instanceof CSSStyleRule
