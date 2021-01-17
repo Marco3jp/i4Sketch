@@ -12,7 +12,7 @@
                 </button>
             </div>
         </div>
-        <h2>データプレビュー</h2>
+        <h2>データプレビュー / 構造化</h2>
         <button @click="onClickAddWrapperElement">Add Wrapper Element</button>
         <div class="cli__data-preview">
             <div class="cli__data-preview-design">
