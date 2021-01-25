@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {BasicDesignData, RectPart, TextPart} from "~/src/interface/BasicDesignData";
+import {RectPart, TextPart} from "~/src/interface/BasicDesignData";
 import StructurePreviewItem from "~/components/StructurePreviewItem.vue";
 import DropLine from '~/components/cli/DropLine.vue';
 import prettier from "prettier/standalone";
